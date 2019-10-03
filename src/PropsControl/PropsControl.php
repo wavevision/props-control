@@ -87,11 +87,11 @@ abstract class PropsControl extends Control
 
 	private function getTemplateFile(): string
 	{
-		$dir = $this->getReflection()->getFileName();
-		if ($dir === false) {
+		$file = $this->getReflection()->getFileName();
+		if ($file === false) {
 			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
 		}
-		return dirname($dir) . '/templates/' . $this->getNameFromClass() . '.latte';
+		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
 	}
 
 	private function mapPropsToTemplate(object $props): void
