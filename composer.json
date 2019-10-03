@@ -1,0 +1,47 @@
+{
+  "name": "wavevision/props-control",
+  "description": "Create smart UI components for Nette Framework.",
+  "type": "library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Wavevision s.r.o.",
+      "email": "info@wavevision.com"
+    },
+    {
+      "name": "Jakub Filla",
+      "email": "jakub.filla@wavevision.com"
+    },
+    {
+      "name": "Vít Rozsíval",
+      "email": "vit@waveivison.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Wavevision\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Wavevision\\": "tests"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "nette/schema": "^1.0",
+    "wavevision/utils": "dev-master",
+    "nette/application": "^3.0"
+  },
+  "require-dev": {
+    "wavevision/coding-standard": "dev-master",
+    "phing/phing": "^2.16",
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "phpunit/phpunit": "^8.3",
+    "phpstan/phpstan": "^0.11.16"
+  },
+  "scripts": {
+    "phing": "phing"
+  }
+}
