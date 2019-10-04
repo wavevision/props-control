@@ -7,5 +7,7 @@ $configurator = new Configurator();
 $configurator->addConfig(
 	['application' => ['mapping' => ['*' => 'Wavevision\PropsControlTests\Presenters\*Presenter']]]
 );
-$configurator->setTempDirectory(__DIR__ . '/../../temp');
+$tempDir = __DIR__ . '/../../temp';
+$configurator->setTempDirectory($tempDir);
+$configurator->addParameters(['wwwDir' => $tempDir]);
 return $configurator->createContainer();
