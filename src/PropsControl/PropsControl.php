@@ -5,6 +5,7 @@ namespace Wavevision\PropsControl;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
 use Nette\InvalidStateException;
+use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Strings;
 
 /**
@@ -25,16 +26,6 @@ abstract class PropsControl extends Control
 
 	private const PROPS = 'props';
 
-	public function createTemplate(): ITemplate
-	{
-		/** @var PropsControlTemplate $template */
-		$template = parent::createTemplate();
-		$template->blockClass = [$this, 'getBlockClass'];
-		$template->elementClass = [$this, 'getElementClass'];
-		$template->setFile($this->getTemplateFile());
-		return $template;
-	}
-
 	public function getNameFromClass(): string
 	{
 		return Strings::getClassName(static::class, true);
@@ -53,6 +44,16 @@ abstract class PropsControl extends Control
 	{
 		$this->mapPropsToTemplate($props);
 		$this->template->render();
+	}
+
+	protected function createTemplate(): ITemplate
+	{
+		/** @var PropsControlTemplate $template */
+		$template = parent::createTemplate();
+		$template->blockClass = [$this, 'getBlockClass'];
+		$template->elementClass = [$this, 'getElementClass'];
+		$template->setFile($this->getTemplateFile());
+		return $template;
 	}
 
 	/**
@@ -93,16 +94,30 @@ abstract class PropsControl extends Control
 
 	/**
 	 * @param string $className
-	 * @param array<string> $modifiers
+	 * @param array<string|null> $modifiers
 	 * @return string
 	 */
 	private function composeClassNames(string $className, array $modifiers): string
 	{
 		$classNames = [$className];
-		foreach ($modifiers as $modifier) {
+		foreach ($this->filterModifiers($modifiers) as $modifier) {
 			$classNames[] = $className . static::MODIFIER_DELIMITER . Strings::camelCaseToDashCase($modifier);
 		}
 		return implode(' ', $classNames);
+	}
+
+	/**
+	 * @param array<string|null> $modifiers
+	 * @return array<string>
+	 */
+	private function filterModifiers(array $modifiers): array
+	{
+		return array_filter(
+			$modifiers,
+			function (?string $modifier): bool {
+				return $modifier !== null;
+			}
+		);
 	}
 
 	private function getBaseClass(): string
@@ -110,12 +125,15 @@ abstract class PropsControl extends Control
 		return static::CLASS_NAME ?: $this->getNameFromClass();
 	}
 
-	private function getBlockClass(): string
+	private function getBlockClass(?string ...$modifiers): string
 	{
-		return $this->composeClassNames($this->getBaseClass(), $this->getMappedModifiers());
+		return $this->composeClassNames(
+			$this->getBaseClass(),
+			Arrays::mergeAllRecursive($this->getMappedModifiers(), $modifiers)
+		);
 	}
 
-	private function getElementClass(string $className, string ...$modifiers): string
+	private function getElementClass(string $className, ?string ...$modifiers): string
 	{
 		return $this->composeClassNames($this->getBaseClass() . static::ELEMENT_DELIMITER . $className, $modifiers);
 	}
