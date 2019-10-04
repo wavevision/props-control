@@ -17,19 +17,18 @@ abstract class PropsControl extends Control
 
 	public const CLASS_NAME_MODIFIERS = [];
 
-	protected const MODIFIERS = 'modifiers';
+	protected const ELEMENT_DELIMITER = '__';
 
-	protected const PROPS = 'props';
+	protected const MODIFIER_DELIMITER = '--';
 
-	private const ELEMENT_DELIMITER = '__';
+	private const MODIFIERS = 'modifiers';
 
-	private const MODIFIER_DELIMITER = '--';
+	private const PROPS = 'props';
 
 	public function createTemplate(): ITemplate
 	{
 		/** @var PropsControlTemplate $template */
 		$template = parent::createTemplate();
-		$template->{self::MODIFIERS} = [];
 		$template->blockClass = [$this, 'getBlockClass'];
 		$template->elementClass = [$this, 'getElementClass'];
 		$template->setFile($this->getTemplateFile());
@@ -41,19 +40,55 @@ abstract class PropsControl extends Control
 		return Strings::getClassName(static::class, true);
 	}
 
+	public function getTemplateFile(): string
+	{
+		$file = $this->getReflection()->getFileName();
+		if ($file === false) {
+			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
+		}
+		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
+	}
+
 	public function render(Props $props): void
 	{
-		$this->mapPropsToTemplate($props->process());
+		$this->mapPropsToTemplate($props);
 		$this->template->render();
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	protected function getMappedModifiers(): array
+	{
+		return $this->template->{self::MODIFIERS} ?? [];
 	}
 
 	/**
 	 * @param string $prop
 	 * @return mixed
 	 */
-	protected function getTemplateProp(string $prop)
+	protected function getMappedProp(string $prop)
 	{
-		return $this->template->{self::PROPS}->$prop ?? null;
+		if ($props = $this->getMappedProps()) {
+			return $props->$prop ?? null;
+		}
+		return null;
+	}
+
+	protected function getMappedProps(): ?object
+	{
+		return $this->template->{self::PROPS} ?? null;
+	}
+
+	protected function mapPropsToTemplate(Props $props): void
+	{
+		$this->template->{self::PROPS} = $props->process();
+		$this->template->{self::MODIFIERS} = [];
+		foreach (static::CLASS_NAME_MODIFIERS as $modifier) {
+			if ($this->getMappedProp($modifier)) {
+				$this->getMappedModifiers()[] = $modifier;
+			}
+		}
 	}
 
 	/**
@@ -65,7 +100,7 @@ abstract class PropsControl extends Control
 	{
 		$classNames = [$className];
 		foreach ($modifiers as $modifier) {
-			$classNames[] = $className . self::MODIFIER_DELIMITER . Strings::camelCaseToDashCase($modifier);
+			$classNames[] = $className . static::MODIFIER_DELIMITER . Strings::camelCaseToDashCase($modifier);
 		}
 		return implode(' ', $classNames);
 	}
@@ -77,30 +112,11 @@ abstract class PropsControl extends Control
 
 	private function getBlockClass(): string
 	{
-		return $this->composeClassNames($this->getBaseClass(), $this->template->{self::MODIFIERS});
+		return $this->composeClassNames($this->getBaseClass(), $this->getMappedModifiers());
 	}
 
 	private function getElementClass(string $className, string ...$modifiers): string
 	{
-		return $this->composeClassNames($this->getBaseClass() . self::ELEMENT_DELIMITER . $className, $modifiers);
-	}
-
-	private function getTemplateFile(): string
-	{
-		$file = $this->getReflection()->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
-		}
-		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
-	}
-
-	private function mapPropsToTemplate(object $props): void
-	{
-		$this->template->{self::PROPS} = $props;
-		foreach (static::CLASS_NAME_MODIFIERS as $modifier) {
-			if ($this->getTemplateProp($modifier)) {
-				$this->template->{self::MODIFIERS}[] = $modifier;
-			}
-		}
+		return $this->composeClassNames($this->getBaseClass() . static::ELEMENT_DELIMITER . $className, $modifiers);
 	}
 }
