@@ -31,15 +31,16 @@
   "require": {
     "php": ">=7.2",
     "nette/schema": "^1.0",
-    "wavevision/utils": "dev-master",
-    "nette/application": "^3.0"
+    "wavevision/utils": "dev-master"
   },
   "require-dev": {
     "wavevision/coding-standard": "dev-master",
     "phing/phing": "^2.16",
     "jakub-onderka/php-parallel-lint": "^1.0",
     "phpunit/phpunit": "^8.3",
-    "phpstan/phpstan": "^0.11.16"
+    "phpstan/phpstan": "^0.11.16",
+    "nette/application": "^3.0",
+    "latte/latte": "^2.5"
   },
   "scripts": {
     "phing": "phing"
