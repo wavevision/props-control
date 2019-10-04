@@ -38,7 +38,6 @@ class PropsControlTest extends TestCase
 		$presenter = $presenterFactory->createPresenter(
 			$presenterFactory->unformatPresenterClass(TestPresenter::class)
 		);
-		$presenter->autoCanonicalize = false;
 		$presenter->addComponent($this->control, 'testControl');
 	}
 
