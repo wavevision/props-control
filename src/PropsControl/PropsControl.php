@@ -5,7 +5,6 @@ namespace Wavevision\PropsControl;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
 use Nette\InvalidStateException;
-use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Strings;
 
 /**
@@ -18,26 +17,18 @@ abstract class PropsControl extends Control
 
 	public const CLASS_NAME_MODIFIERS = [];
 
-	protected const ELEMENT_DELIMITER = '__';
-
-	protected const MODIFIER_DELIMITER = '--';
-
 	private const MODIFIERS = 'modifiers';
 
 	private const PROPS = 'props';
 
+	public function getBaseClassName(): string
+	{
+		return static::CLASS_NAME ?: $this->getNameFromClass();
+	}
+
 	public function getNameFromClass(): string
 	{
 		return Strings::getClassName(static::class, true);
-	}
-
-	public function getTemplateFile(): string
-	{
-		$file = $this->getReflection()->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
-		}
-		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
 	}
 
 	public function render(Props $props): void
@@ -50,8 +41,7 @@ abstract class PropsControl extends Control
 	{
 		/** @var PropsControlTemplate $template */
 		$template = parent::createTemplate();
-		$template->blockClass = [$this, 'getBlockClass'];
-		$template->elementClass = [$this, 'getElementClass'];
+		$template->className = $this->createClassName();
 		$template->setFile($this->getTemplateFile());
 		return $template;
 	}
@@ -92,49 +82,22 @@ abstract class PropsControl extends Control
 		}
 	}
 
-	/**
-	 * @param string $className
-	 * @param array<string|null> $modifiers
-	 * @return string
-	 */
-	private function composeClassNames(string $className, array $modifiers): string
+	private function createClassName(): ClassName
 	{
-		$classNames = [$className];
-		foreach ($this->filterModifiers($modifiers) as $modifier) {
-			$classNames[] = $className . static::MODIFIER_DELIMITER . Strings::camelCaseToDashCase($modifier);
-		}
-		return implode(' ', $classNames);
-	}
-
-	/**
-	 * @param array<string|null> $modifiers
-	 * @return array<string>
-	 */
-	private function filterModifiers(array $modifiers): array
-	{
-		return array_filter(
-			$modifiers,
-			function (?string $modifier): bool {
-				return $modifier !== null;
+		return new ClassName(
+			$this->getBaseClassName(),
+			function (): array {
+				return $this->getMappedModifiers();
 			}
 		);
 	}
 
-	private function getBaseClass(): string
+	private function getTemplateFile(): string
 	{
-		return static::CLASS_NAME ?: $this->getNameFromClass();
-	}
-
-	private function getBlockClass(?string ...$modifiers): string
-	{
-		return $this->composeClassNames(
-			$this->getBaseClass(),
-			Arrays::mergeAllRecursive($this->getMappedModifiers(), $modifiers)
-		);
-	}
-
-	private function getElementClass(string $className, ?string ...$modifiers): string
-	{
-		return $this->composeClassNames($this->getBaseClass() . static::ELEMENT_DELIMITER . $className, $modifiers);
+		$file = $this->getReflection()->getFileName();
+		if ($file === false) {
+			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
+		}
+		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
 	}
 }

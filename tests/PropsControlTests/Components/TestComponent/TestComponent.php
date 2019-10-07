@@ -7,4 +7,7 @@ use Wavevision\PropsControl\PropsControl;
 class TestComponent extends PropsControl
 {
 
+	public const CLASS_NAME = 'test-component';
+
+	public const CLASS_NAME_MODIFIERS = [TestProps::BOOLEAN];
 }

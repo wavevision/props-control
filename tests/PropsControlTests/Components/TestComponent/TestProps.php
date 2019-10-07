@@ -9,6 +9,8 @@ use Wavevision\PropsControl\Props;
 class TestProps extends Props
 {
 
+	public const BOOLEAN = 'boolean';
+
 	public const NULLABLE_NUMBER = 'nullableNumber';
 
 	public const STRING = 'string';
@@ -17,6 +19,7 @@ class TestProps extends Props
 	{
 		return Expect::structure(
 			[
+				self::BOOLEAN => Expect::bool(false),
 				self::NULLABLE_NUMBER => Expect::int()->nullable(),
 				self::STRING => Expect::string()->required(),
 			]

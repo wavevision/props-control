@@ -8,14 +8,9 @@ class PropsControlTemplate extends Template
 {
 
 	/**
-	 * @var callable
+	 * @var ClassName
 	 */
-	public $blockClass;
-
-	/**
-	 * @var callable
-	 */
-	public $elementClass;
+	public $className;
 
 	/**
 	 * @var array<string>
