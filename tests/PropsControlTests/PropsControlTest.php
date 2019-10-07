@@ -30,7 +30,7 @@ class PropsControlTest extends TestCase
 
 	public function setUp(): void
 	{
-		$this->container = Bootstrap::getContainer();
+		$this->container = Environment::getContainer();
 		$this->control = new TestComponent();
 		/** @var PresenterFactory $presenterFactory */
 		$presenterFactory = $this->container->getByType(IPresenterFactory::class);

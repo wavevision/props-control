@@ -5,7 +5,7 @@ namespace Wavevision\PropsControlTests;
 use Nette\Configurator;
 use Nette\DI\Container;
 
-class Bootstrap
+class Environment
 {
 
 	/**
@@ -13,7 +13,7 @@ class Bootstrap
 	 */
 	private static $container;
 
-	public static function boot(): void
+	public static function setup(): void
 	{
 		$configurator = new Configurator();
 		$configurator->addConfig(

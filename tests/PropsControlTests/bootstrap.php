@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-use Wavevision\PropsControlTests\Bootstrap;
+use Wavevision\PropsControlTests\Environment;
 
 require __DIR__ . '/../../vendor/autoload.php';
-Bootstrap::boot();
+Environment::setup();
