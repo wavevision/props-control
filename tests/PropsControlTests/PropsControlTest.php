@@ -9,6 +9,7 @@ use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\PropsControl;
+use Wavevision\PropsControlTests\Components\InvalidComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 use Wavevision\PropsControlTests\Presenters\TestPresenter;

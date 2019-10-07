@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace Wavevision\PropsControlTests;
+namespace Wavevision\PropsControlTests\Components;
 
 use Wavevision\PropsControl\PropsControl;
 
