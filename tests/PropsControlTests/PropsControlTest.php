@@ -5,11 +5,12 @@ namespace Wavevision\PropsControlTests;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
+use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\PropsControl;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
-use Wavevision\PropsControlTests\Components\TestComponent\TestProps;
+use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 use Wavevision\PropsControlTests\Presenters\TestPresenter;
 
 /**
@@ -44,7 +45,7 @@ class PropsControlTest extends TestCase
 	public function testRender(): void
 	{
 		ob_start();
-		$this->control->render(new TestProps([TestProps::STRING => 'some string']));
+		$this->control->render([TestComponentProps::STRING => 'some string']);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
 		$this->assertEquals(1, $root->count());
@@ -56,5 +57,12 @@ class PropsControlTest extends TestCase
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());
 		$this->assertEquals('other-block other-block--some-modifier', $other->attr('class'));
+	}
+
+	public function testCreatePropsThrowsException(): void
+	{
+		$control = new InvalidComponent();
+		$this->expectException(InvalidStateException::class);
+		$control->render([]);
 	}
 }

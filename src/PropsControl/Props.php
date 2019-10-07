@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Schema\Elements\Structure;
+use Nette\Schema\Expect;
 use Nette\Schema\Processor;
 use Nette\SmartObject;
 
@@ -33,7 +34,7 @@ abstract class Props
 	{
 		$this->data = $data;
 		$this->processor = new Processor();
-		$this->schema = $this->define();
+		$this->schema = Expect::structure($this->define());
 	}
 
 	public function getProcessor(): Processor
@@ -46,5 +47,8 @@ abstract class Props
 		return $this->processor->process($this->schema, $this->data);
 	}
 
-	abstract protected function define(): Structure;
+	/**
+	 * @return array<mixed>
+	 */
+	abstract protected function define(): array;
 }

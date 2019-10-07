@@ -4,6 +4,7 @@ namespace Wavevision\PropsControl;
 
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
+use Nette\InvalidStateException;
 use Wavevision\Utils\Strings;
 
 /**
@@ -30,10 +31,27 @@ abstract class PropsControl extends Control
 		return Strings::getClassName(static::class, true);
 	}
 
-	public function render(Props $props): void
+	/**
+	 * @param array<mixed> $props
+	 */
+	public function render(array $props): void
+	{
+		$this->renderObject($this->createProps($props));
+	}
+
+	public function renderObject(Props $props): void
 	{
 		$this->mapPropsToTemplate($props);
 		$this->template->render();
+	}
+
+	protected function beforeMapPropsToTemplate(object $props): object
+	{
+		return $props;
+	}
+
+	protected function beforeRender(object $props): void
+	{
 	}
 
 	protected function createTemplate(): ITemplate
@@ -72,13 +90,15 @@ abstract class PropsControl extends Control
 
 	protected function mapPropsToTemplate(Props $props): void
 	{
-		$this->template->{self::PROPS} = $props->process();
+		$props = $this->beforeMapPropsToTemplate($props->process());
+		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
 		foreach (static::CLASS_NAME_MODIFIERS as $modifier) {
 			if ($this->getMappedProp($modifier)) {
 				$this->getMappedModifiers()[] = $modifier;
 			}
 		}
+		$this->beforeRender($props);
 	}
 
 	private function createClassName(): ClassName
@@ -89,6 +109,19 @@ abstract class PropsControl extends Control
 				return $this->getMappedModifiers();
 			}
 		);
+	}
+
+	/**
+	 * @param array<mixed> $props
+	 * @return Props
+	 */
+	private function createProps(array $props): Props
+	{
+		$class = static::class . Strings::firstUpper(self::PROPS);
+		if (!class_exists($class)) {
+			throw new InvalidStateException("Props definition '$class' does not exist.");
+		}
+		return new $class($props);
 	}
 
 	private function getTemplateFile(): string
