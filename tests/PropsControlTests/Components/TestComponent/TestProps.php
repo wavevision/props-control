@@ -19,7 +19,7 @@ class TestProps extends Props
 	{
 		return Expect::structure(
 			[
-				self::BOOLEAN => Expect::bool(false),
+				self::BOOLEAN => Expect::bool(true),
 				self::NULLABLE_NUMBER => Expect::int()->nullable(),
 				self::STRING => Expect::string()->required(),
 			]

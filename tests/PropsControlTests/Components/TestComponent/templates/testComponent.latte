@@ -2,4 +2,12 @@
 	<div n:class="$className->element(first-child)">
         {$props->string}
 	</div>
+    {var partClassName = $className->create(part)}
+	<div n:class="$partClassName->block()" n:inner-foreach="[1,2,3,4,5] as $part">
+		<div n:class="$partClassName->element(element, $part === 1 ? first : null, $part === 5 ? last : null)"></div>
+	</div>
+</div>
+{var otherClassName = $className->create(other-block, false)}
+<div n:class="$otherClassName->block(some-modifier)">
+	<div n:class="$otherClassName->element(element, another-modifier)"></div>
 </div>

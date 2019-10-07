@@ -2,7 +2,6 @@
 
 namespace Wavevision\PropsControl;
 
-use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Strings;
 
 class ClassName
@@ -47,13 +46,10 @@ class ClassName
 
 	public function block(?string ...$modifiers): string
 	{
-		return $this->composeClassNames(
-			$this->baseClass,
-			Arrays::mergeAllRecursive(($this->modifiersCallback)(), $modifiers)
-		);
+		return $this->composeClassNames($this->baseClass, array_merge(($this->modifiersCallback)(), $modifiers));
 	}
 
-	public function create(string $baseClass, bool $sub = false): self
+	public function create(string $baseClass, bool $sub = true): self
 	{
 		if ($sub) {
 			$baseClass = $this->baseClass . $this->subBlockDelimiter . $baseClass;

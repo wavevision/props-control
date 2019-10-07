@@ -5,8 +5,8 @@ namespace Wavevision\PropsControlTests;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
-use Nette\Schema\ValidationException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\PropsControl;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestProps;
@@ -45,14 +45,16 @@ class PropsControlTest extends TestCase
 	{
 		ob_start();
 		$this->control->render(new TestProps([TestProps::STRING => 'some string']));
-		$html = ob_get_clean();
-		var_dump($html);
-		$this->assertIsString($html);
-	}
-
-	public function testRenderThrowsValidationException(): void
-	{
-		$this->expectException(ValidationException::class);
-		$this->control->render(new TestProps([]));
+		$crawler = new Crawler(ob_get_clean());
+		$root = $crawler->filter('div.test-component');
+		$this->assertEquals(1, $root->count());
+		$this->assertCount(2, $root->children());
+		$parts = $crawler->filter('div.test-component-part__element');
+		$this->assertCount(5, $parts);
+		$this->assertTrue(strpos($parts->first()->attr('class'), 'first') !== false);
+		$other = $crawler->filter('div.other-block');
+		$this->assertEquals(1, $other->count());
+		$this->assertCount(1, $other->children());
+		$this->assertEquals('other-block other-block--some-modifier', $other->attr('class'));
 	}
 }

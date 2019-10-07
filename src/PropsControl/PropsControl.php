@@ -4,7 +4,6 @@ namespace Wavevision\PropsControl;
 
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
-use Nette\InvalidStateException;
 use Wavevision\Utils\Strings;
 
 /**
@@ -23,7 +22,7 @@ abstract class PropsControl extends Control
 
 	public function getBaseClassName(): string
 	{
-		return static::CLASS_NAME ?: $this->getNameFromClass();
+		return static::CLASS_NAME ?: Strings::camelCaseToDashCase($this->getNameFromClass());
 	}
 
 	public function getNameFromClass(): string
@@ -94,10 +93,8 @@ abstract class PropsControl extends Control
 
 	private function getTemplateFile(): string
 	{
+		/** @var string $file */
 		$file = $this->getReflection()->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException('Unable to get filename for ' . static::class . '.');
-		}
 		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
 	}
 }
