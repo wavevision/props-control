@@ -50,7 +50,7 @@ class ClassName
 	public function block(?string ...$modifiers): string
 	{
 		if (is_callable($this->modifiersCallback)) {
-			$modifiers = array_merge(($this->modifiersCallback)(), $modifiers);
+			$modifiers = array_unique(array_merge(($this->modifiersCallback)(), $modifiers));
 		}
 		return $this->composeClassNames($this->baseClass, $modifiers);
 	}
