@@ -7,14 +7,22 @@ use Wavevision\PropsControl\PropsControl;
 class TestComponent extends PropsControl
 {
 
+	/**
+	 * Optionally override default CSS class generated from component class
+	 * public const CLASS_NAME = 'my-class';
+	 */
 	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN];
 
-	/**
-	 * @inheritDoc
-	 */
-	public function render(array $props): void
+	protected function beforeMapPropsToTemplate(object $props): void
 	{
+		parent::beforeMapPropsToTemplate($props);
+		// do stuff before valid props are sent to template, e.g. assign extra params to template
 		$this->template->setParameters(['undefinedProp' => $this->getMappedProp('undefinedProp')]);
-		parent::render($props);
+	}
+
+	protected function beforeRender(object $props): void
+	{
+		parent::beforeRender($props);
+		// do stuff before component is rendered
 	}
 }
