@@ -12,7 +12,7 @@ class TestComponent extends PropsControl
 	/**
 	 * @inheritDoc
 	 */
-	public function render($props): void
+	public function render(array $props): void
 	{
 		$this->template->setParameters(['undefinedProp' => $this->getMappedProp('undefinedProp')]);
 		parent::render($props);

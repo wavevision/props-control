@@ -31,21 +31,23 @@ abstract class Props
 	/**
 	 * @param mixed[] $data
 	 */
-	public function __construct(array $data)
+	public function __construct(array $data = [])
 	{
 		$this->data = $data;
 		$this->processor = new Processor();
 		$this->schema = Expect::structure($this->define());
 	}
 
-	public function getProcessor(): Processor
+	/**
+	 * @param mixed[]|null $data
+	 * @return object
+	 */
+	public function process(?array $data = null): object
 	{
-		return $this->processor;
-	}
-
-	public function process(): object
-	{
-		return $this->processor->process($this->schema, $this->data);
+		if ($data === null) {
+			$data = $this->data;
+		}
+		return $this->processor->process($this->schema, $data);
 	}
 
 	/**

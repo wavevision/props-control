@@ -39,7 +39,7 @@ abstract class PropsControl extends Control
 		$this->renderObject($this->createProps($props));
 	}
 
-	public function renderObject(Props $props): void
+	public function renderObject(object $props): void
 	{
 		$this->mapPropsToTemplate($props);
 		$this->template->render();
@@ -87,9 +87,11 @@ abstract class PropsControl extends Control
 		return $this->template->{self::PROPS} ?? null;
 	}
 
-	protected function mapPropsToTemplate(Props $props): void
+	protected function mapPropsToTemplate(object $props): void
 	{
-		$props = $props->process();
+		if ($props instanceof Props) {
+			$props = $props->process();
+		}
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];

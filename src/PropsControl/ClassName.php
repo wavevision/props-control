@@ -107,7 +107,7 @@ class ClassName
 
 	/**
 	 * @param array<string|null> $modifiers
-	 * @return array<string>
+	 * @return string[]
 	 */
 	private function filterModifiers(array $modifiers): array
 	{
