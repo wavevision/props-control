@@ -32,7 +32,7 @@ abstract class PropsControl extends Control
 	}
 
 	/**
-	 * @param array<mixed> $props
+	 * @param mixed[] $props
 	 */
 	public function render(array $props): void
 	{
@@ -63,7 +63,7 @@ abstract class PropsControl extends Control
 	}
 
 	/**
-	 * @return array<string>
+	 * @return string[]
 	 */
 	protected function getMappedModifiers(): array
 	{
@@ -112,7 +112,7 @@ abstract class PropsControl extends Control
 	}
 
 	/**
-	 * @param array<mixed> $props
+	 * @param mixed[] $props
 	 * @return Props
 	 */
 	private function createProps(array $props): Props

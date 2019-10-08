@@ -14,7 +14,7 @@ abstract class Props
 	use SmartObject;
 
 	/**
-	 * @var array<mixed>
+	 * @var mixed[]
 	 */
 	protected $data;
 
@@ -29,7 +29,7 @@ abstract class Props
 	private $processor;
 
 	/**
-	 * @param array<mixed> $data
+	 * @param mixed[] $data
 	 */
 	public function __construct(array $data)
 	{
@@ -49,7 +49,7 @@ abstract class Props
 	}
 
 	/**
-	 * @return array<Schema>
+	 * @return Schema[]
 	 */
 	abstract protected function define(): array;
 }

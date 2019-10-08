@@ -13,7 +13,7 @@ class PropsControlTemplate extends Template
 	public $className;
 
 	/**
-	 * @var array<string>
+	 * @var string[]
 	 */
 	public $modifiers;
 
