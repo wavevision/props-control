@@ -49,11 +49,13 @@ class PropsControlTest extends TestCase
 		$this->control->render([TestComponentProps::STRING => 'some string']);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
+		$this->assertEquals('test-component test-component--boolean', $root->attr('class'));
 		$this->assertEquals(1, $root->count());
 		$this->assertCount(2, $root->children());
 		$parts = $crawler->filter('div.test-component-part__element');
 		$this->assertCount(5, $parts);
 		$this->assertTrue(strpos($parts->first()->attr('class'), 'first') !== false);
+		$this->assertTrue(strpos($parts->last()->attr('class'), 'last') !== false);
 		$other = $crawler->filter('div.other-block');
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());

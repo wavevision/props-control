@@ -7,7 +7,7 @@
 		<div n:class="$partClassName->element(element, $part === 1 ? first : null, $part === 5 ? last : null)"></div>
 	</div>
 </div>
-{var otherClassName = $className->create(other-block, false)}
+{var otherClassName = $className->create(other-block, false, true)}
 <div n:class="$otherClassName->block(some-modifier)">
 	<div n:class="$otherClassName->element(element, another-modifier)"></div>
 </div>

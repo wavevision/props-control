@@ -45,9 +45,8 @@ abstract class PropsControl extends Control
 		$this->template->render();
 	}
 
-	protected function beforeMapPropsToTemplate(object $props): object
+	protected function beforeMapPropsToTemplate(object $props): void
 	{
-		return $props;
 	}
 
 	protected function beforeRender(object $props): void
@@ -90,12 +89,13 @@ abstract class PropsControl extends Control
 
 	protected function mapPropsToTemplate(Props $props): void
 	{
-		$props = $this->beforeMapPropsToTemplate($props->process());
+		$props = $props->process();
+		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
 		foreach (static::CLASS_NAME_MODIFIERS as $modifier) {
 			if ($this->getMappedProp($modifier)) {
-				$this->getMappedModifiers()[] = $modifier;
+				$this->template->{self::MODIFIERS}[] = $modifier;
 			}
 		}
 		$this->beforeRender($props);

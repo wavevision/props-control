@@ -2,10 +2,13 @@
 
 namespace Wavevision\PropsControl;
 
+use Nette\SmartObject;
 use Wavevision\Utils\Strings;
 
 class ClassName
 {
+
+	use SmartObject;
 
 	private const ELEMENT_DELIMITER = '__';
 
@@ -29,7 +32,7 @@ class ClassName
 	private $modifierDelimiter = self::MODIFIER_DELIMITER;
 
 	/**
-	 * @var callable(): array<string>
+	 * @var callable(): array<string>|null
 	 */
 	private $modifiersCallback;
 
@@ -38,7 +41,7 @@ class ClassName
 	 */
 	private $subBlockDelimiter = self::SUB_BLOCK_DELIMITER;
 
-	public function __construct(string $baseClass, callable $modifiersCallback)
+	public function __construct(string $baseClass, ?callable $modifiersCallback)
 	{
 		$this->baseClass = $baseClass;
 		$this->modifiersCallback = $modifiersCallback;
@@ -46,15 +49,18 @@ class ClassName
 
 	public function block(?string ...$modifiers): string
 	{
-		return $this->composeClassNames($this->baseClass, array_merge(($this->modifiersCallback)(), $modifiers));
+		if (is_callable($this->modifiersCallback)) {
+			$modifiers = array_merge(($this->modifiersCallback)(), $modifiers);
+		}
+		return $this->composeClassNames($this->baseClass, $modifiers);
 	}
 
-	public function create(string $baseClass, bool $sub = true): self
+	public function create(string $baseClass, bool $subBlock = true, bool $excludeModifiers = false): self
 	{
-		if ($sub) {
+		if ($subBlock) {
 			$baseClass = $this->baseClass . $this->subBlockDelimiter . $baseClass;
 		}
-		return new static($baseClass, $this->modifiersCallback);
+		return new static($baseClass, $excludeModifiers ? null : $this->modifiersCallback);
 	}
 
 	public function element(string $className, ?string ...$modifiers): string
