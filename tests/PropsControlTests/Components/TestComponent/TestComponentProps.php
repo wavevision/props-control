@@ -12,6 +12,8 @@ class TestComponentProps extends Props
 
 	public const NULLABLE_NUMBER = 'nullableNumber';
 
+	public const SHAPE = 'shape';
+
 	public const STRING = 'string';
 
 	/**
@@ -23,6 +25,7 @@ class TestComponentProps extends Props
 			self::BOOLEAN => Expect::bool(true),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),
+			self::SHAPE => Expect::arrayOf(Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])),
 		];
 	}
 }

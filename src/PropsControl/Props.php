@@ -3,9 +3,9 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Schema\Elements\Structure;
-use Nette\Schema\Elements\Type;
 use Nette\Schema\Expect;
 use Nette\Schema\Processor;
+use Nette\Schema\Schema;
 use Nette\SmartObject;
 
 abstract class Props
@@ -49,7 +49,7 @@ abstract class Props
 	}
 
 	/**
-	 * @return array<Type>
+	 * @return array<Schema>
 	 */
 	abstract protected function define(): array;
 }

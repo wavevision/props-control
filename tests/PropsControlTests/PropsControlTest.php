@@ -46,12 +46,14 @@ class PropsControlTest extends TestCase
 	public function testRender(): void
 	{
 		ob_start();
-		$this->control->render([TestComponentProps::STRING => 'some string']);
+		$this->control->render(
+			[TestComponentProps::STRING => 'some string', TestComponentProps::SHAPE => [['one' => 'One', 'two' => 2]]]
+		);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
 		$this->assertEquals('test-component test-component--boolean', $root->attr('class'));
 		$this->assertEquals(1, $root->count());
-		$this->assertCount(2, $root->children());
+		$this->assertCount(3, $root->children());
 		$parts = $crawler->filter('div.test-component-part__element');
 		$this->assertCount(5, $parts);
 		$this->assertTrue(strpos($parts->first()->attr('class'), 'first') !== false);
@@ -60,6 +62,9 @@ class PropsControlTest extends TestCase
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());
 		$this->assertEquals('other-block other-block--some-modifier', $other->attr('class'));
+		$shapes = $root->filter('div.test-component__shapes');
+		$this->assertCount(1, $shapes->children());
+		$this->assertEquals('One / 2', $shapes->children()->first()->text());
 	}
 
 	public function testCreatePropsThrowsException(): void
