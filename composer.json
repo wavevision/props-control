@@ -2,7 +2,6 @@
   "name": "wavevision/props-control",
   "description": "Create smart UI components for Nette Framework.",
   "type": "library",
-  "version": "1.0.0",
   "license": "MIT",
   "authors": [
     {
