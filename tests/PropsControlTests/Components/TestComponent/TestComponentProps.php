@@ -8,11 +8,11 @@ use Wavevision\PropsControl\Props;
 class TestComponentProps extends Props
 {
 
-	public const BOOLEAN = 'boolean';
+	public const BOOLEAN_VALUE = 'boolean';
+
+	public const COLLECTION = 'collection';
 
 	public const NULLABLE_NUMBER = 'nullableNumber';
-
-	public const SHAPE = 'shape';
 
 	public const STRING = 'string';
 
@@ -22,10 +22,12 @@ class TestComponentProps extends Props
 	protected function define(): array
 	{
 		return [
-			self::BOOLEAN => Expect::bool(true),
+			self::BOOLEAN_VALUE => Expect::bool(true),
+			self::COLLECTION => Expect::arrayOf(
+				Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])
+			),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),
-			self::SHAPE => Expect::arrayOf(Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])),
 		];
 	}
 }

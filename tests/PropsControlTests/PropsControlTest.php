@@ -47,7 +47,10 @@ class PropsControlTest extends TestCase
 	{
 		ob_start();
 		$this->control->render(
-			[TestComponentProps::STRING => 'some string', TestComponentProps::SHAPE => [['one' => 'One', 'two' => 2]]]
+			[
+				TestComponentProps::STRING => 'some string',
+				TestComponentProps::COLLECTION => [['one' => 'One', 'two' => 2]],
+			]
 		);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
@@ -62,7 +65,7 @@ class PropsControlTest extends TestCase
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());
 		$this->assertEquals('other-block other-block--some-modifier', $other->attr('class'));
-		$shapes = $root->filter('div.test-component__shapes');
+		$shapes = $root->filter('div.test-component__collection');
 		$this->assertCount(1, $shapes->children());
 		$this->assertEquals('One / 2', $shapes->children()->first()->text());
 	}

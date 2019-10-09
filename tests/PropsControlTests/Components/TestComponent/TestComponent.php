@@ -11,7 +11,10 @@ class TestComponent extends PropsControl
 	 * Optionally override default CSS class generated from component class
 	 * public const CLASS_NAME = 'my-class';
 	 */
-	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN];
+	/**
+	 * Choose which props behave as CSS class modifiers if they are truthy
+	 */
+	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN_VALUE];
 
 	protected function beforeMapPropsToTemplate(object $props): void
 	{
