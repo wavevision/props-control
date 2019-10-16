@@ -128,8 +128,7 @@ abstract class PropsControl extends Control
 
 	private function getTemplateFile(): string
 	{
-		/** @var string $file */
 		$file = $this->getReflection()->getFileName();
-		return dirname($file) . '/templates/' . $this->getNameFromClass() . '.latte';
+		return dirname((string)$file) . '/templates/' . $this->getNameFromClass() . '.latte';
 	}
 }

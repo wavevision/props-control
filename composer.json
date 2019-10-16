@@ -29,20 +29,20 @@
   },
   "require": {
     "php": ">=7.2",
+    "nette/application": "^3.0",
     "nette/schema": "^1.0",
-    "wavevision/utils": "dev-master"
+    "wavevision/utils": "^1.2"
   },
   "require-dev": {
-    "wavevision/coding-standard": "dev-master",
-    "phing/phing": "^2.16",
     "jakub-onderka/php-parallel-lint": "^1.0",
-    "phpunit/phpunit": "^8.3",
-    "phpstan/phpstan": "^0.11.16",
-    "nette/application": "^3.0",
     "latte/latte": "^2.5",
-    "symfony/dom-crawler": "^4.3",
+    "phing/phing": "^2.16",
+    "php-coveralls/php-coveralls": "^2.1",
+    "phpstan/phpstan": "^0.11.16",
+    "phpunit/phpunit": "^8.3",
     "symfony/css-selector": "^4.3",
-    "php-coveralls/php-coveralls": "^2.1"
+    "symfony/dom-crawler": "^4.3",
+    "wavevision/coding-standard": "^1.1"
   },
   "scripts": {
     "phing": "phing"
