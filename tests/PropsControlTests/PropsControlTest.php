@@ -15,9 +15,6 @@ use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 use Wavevision\PropsControlTests\Presenters\TestPresenter;
 
-/**
- * @covers \Wavevision\PropsControl\PropsControl
- */
 class PropsControlTest extends TestCase
 {
 

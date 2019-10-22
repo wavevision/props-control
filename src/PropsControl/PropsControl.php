@@ -2,8 +2,6 @@
 
 namespace Wavevision\PropsControl;
 
-use Nette\Application\UI\Control;
-use Nette\Application\UI\ITemplate;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use Wavevision\Utils\Strings;
@@ -11,18 +9,18 @@ use Wavevision\Utils\Strings;
 /**
  * @property-read PropsControlTemplate $template
  */
-abstract class PropsControl extends Control
+abstract class PropsControl extends BaseControl
 {
 
 	public const CLASS_NAME = '';
 
 	public const CLASS_NAME_MODIFIERS = [];
 
-	protected const DEFAULT_TEMPLATE = 'default';
-
 	private const MODIFIERS = 'modifiers';
 
 	private const PROPS = 'props';
+
+	private const TEMPLATE_CLASS_NAME = 'className';
 
 	public function getBaseClassName(): string
 	{
@@ -48,15 +46,6 @@ abstract class PropsControl extends Control
 
 	protected function beforeRender(object $props): void
 	{
-	}
-
-	protected function createTemplate(): ITemplate
-	{
-		/** @var PropsControlTemplate $template */
-		$template = parent::createTemplate();
-		$template->className = $this->createClassName();
-		$template->setFile($this->getTemplateFile());
-		return $template;
 	}
 
 	/**
@@ -117,6 +106,14 @@ abstract class PropsControl extends Control
 		$this->template->render();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	protected function getTemplateParameters(): array
+	{
+		return [self::TEMPLATE_CLASS_NAME => $this->createClassName()];
+	}
+
 	private function createClassName(): ClassName
 	{
 		return new ClassName(
@@ -138,14 +135,5 @@ abstract class PropsControl extends Control
 			throw new InvalidStateException("Props definition '$class' does not exist.");
 		}
 		return new $class($props);
-	}
-
-	private function getTemplateFile(): string
-	{
-		$file = $this->getReflection()->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException(sprintf('Unable to get filename for "%s".', static::class));
-		}
-		return dirname($file) . '/templates/' . static::DEFAULT_TEMPLATE . '.latte';
 	}
 }
