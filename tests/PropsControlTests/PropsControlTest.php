@@ -5,6 +5,7 @@ namespace Wavevision\PropsControlTests;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
+use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -68,6 +69,12 @@ class PropsControlTest extends TestCase
 		$shapes = $root->filter('div.test-component__collection');
 		$this->assertCount(1, $shapes->children());
 		$this->assertEquals('One / 2', $shapes->children()->first()->text());
+	}
+
+	public function testRenderThrowsException(): void
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->control->render(1);
 	}
 
 	public function testCreatePropsThrowsException(): void

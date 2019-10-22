@@ -4,6 +4,7 @@ namespace Wavevision\PropsControl;
 
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
+use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use Wavevision\Utils\Strings;
 
@@ -16,6 +17,8 @@ abstract class PropsControl extends Control
 	public const CLASS_NAME = '';
 
 	public const CLASS_NAME_MODIFIERS = [];
+
+	protected const DEFAULT_TEMPLATE = 'default';
 
 	private const MODIFIERS = 'modifiers';
 
@@ -32,17 +35,11 @@ abstract class PropsControl extends Control
 	}
 
 	/**
-	 * @param mixed[] $props
+	 * @param object|mixed[] $props
 	 */
-	public function render(array $props): void
+	public function render($props): void
 	{
-		$this->renderObject($this->createProps($props));
-	}
-
-	public function renderObject(object $props): void
-	{
-		$this->mapPropsToTemplate($props);
-		$this->template->render();
+		$this->renderControl($props);
 	}
 
 	protected function beforeMapPropsToTemplate(object $props): void
@@ -65,7 +62,7 @@ abstract class PropsControl extends Control
 	/**
 	 * @return string[]
 	 */
-	protected function getMappedModifiers(): array
+	final protected function getMappedModifiers(): array
 	{
 		return $this->template->{self::MODIFIERS} ?? [];
 	}
@@ -74,7 +71,7 @@ abstract class PropsControl extends Control
 	 * @param string $prop
 	 * @return mixed
 	 */
-	protected function getMappedProp(string $prop)
+	final protected function getMappedProp(string $prop)
 	{
 		if ($props = $this->getMappedProps()) {
 			return $props->$prop ?? null;
@@ -82,12 +79,12 @@ abstract class PropsControl extends Control
 		return null;
 	}
 
-	protected function getMappedProps(): ?object
+	final protected function getMappedProps(): ?object
 	{
 		return $this->template->{self::PROPS} ?? null;
 	}
 
-	protected function mapPropsToTemplate(object $props): void
+	final protected function mapPropsToTemplate(object $props): void
 	{
 		if ($props instanceof Props) {
 			$props = $props->process();
@@ -101,6 +98,23 @@ abstract class PropsControl extends Control
 			}
 		}
 		$this->beforeRender($props);
+	}
+
+	/**
+	 * @param mixed[]|object $props
+	 */
+	final protected function renderControl($props): void
+	{
+		if (is_array($props)) {
+			$props = $this->createProps($props);
+		}
+		if (!is_object($props)) {
+			throw new InvalidArgumentException(
+				sprintf('Render props must be array|object, "%s" given to "%s".', gettype($props), static::class)
+			);
+		}
+		$this->mapPropsToTemplate($props);
+		$this->template->render();
 	}
 
 	private function createClassName(): ClassName
@@ -129,6 +143,6 @@ abstract class PropsControl extends Control
 	private function getTemplateFile(): string
 	{
 		$file = $this->getReflection()->getFileName();
-		return dirname((string)$file) . '/templates/' . $this->getNameFromClass() . '.latte';
+		return dirname((string)$file) . '/templates/' . static::DEFAULT_TEMPLATE . '.latte';
 	}
 }
