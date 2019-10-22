@@ -143,6 +143,9 @@ abstract class PropsControl extends Control
 	private function getTemplateFile(): string
 	{
 		$file = $this->getReflection()->getFileName();
-		return dirname((string)$file) . '/templates/' . static::DEFAULT_TEMPLATE . '.latte';
+		if ($file === false) {
+			throw new InvalidStateException(sprintf('Unable to get filename for "%s".', static::class));
+		}
+		return dirname($file) . '/templates/' . static::DEFAULT_TEMPLATE . '.latte';
 	}
 }
