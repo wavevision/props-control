@@ -15,6 +15,7 @@
     <target name="ci" depends="lint, phpcs, phpstan, test:coverage:report"/>
     <target name="cs" description="Check code style and fix it if possible" depends="phpcbf, phpcs"/>
     <target name="init" description="Initialize project" depends="composer"/>
+    <target name="reset" description="Clear cache, dump autoload" depends="rm-cache, dumpautoload"/>
 
     <target name="rm-cache">
         <exec executable="rm" logoutput="true" passthru="true" checkreturn="true">
@@ -22,8 +23,6 @@
             <arg value="${temp}/cache"/>
         </exec>
     </target>
-
-    <target name="reset" description="Clear cache, dump autoload" depends="rm-cache, dumpautoload"/>
 
     <target name="dumpautoload">
         <exec executable="composer" logoutput="true" passthru="true" checkreturn="true">
