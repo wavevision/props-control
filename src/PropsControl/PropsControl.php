@@ -37,7 +37,18 @@ abstract class PropsControl extends BaseControl
 	 */
 	public function render($props): void
 	{
-		$this->renderControl($props);
+		$this->prepareRender($props);
+		$this->template->render();
+	}
+
+	/**
+	 * @param object|mixed[] $props
+	 * @return string
+	 */
+	public function renderToString($props): string
+	{
+		$this->prepareRender($props);
+		return $this->template->renderToString();
 	}
 
 	protected function beforeMapPropsToTemplate(object $props): void
@@ -90,9 +101,17 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	protected function getTemplateParameters(): array
+	{
+		return [self::TEMPLATE_CLASS_NAME => $this->createClassName()];
+	}
+
+	/**
 	 * @param mixed[]|object $props
 	 */
-	final protected function renderControl($props): void
+	final protected function prepareRender($props): void
 	{
 		if (is_array($props)) {
 			$props = $this->createProps($props);
@@ -103,15 +122,6 @@ abstract class PropsControl extends BaseControl
 			);
 		}
 		$this->mapPropsToTemplate($props);
-		$this->template->render();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getTemplateParameters(): array
-	{
-		return [self::TEMPLATE_CLASS_NAME => $this->createClassName()];
 	}
 
 	private function createClassName(): ClassName

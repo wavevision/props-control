@@ -68,6 +68,18 @@ class PropsControlTest extends TestCase
 		$this->assertEquals('One / 2', $shapes->children()->first()->text());
 	}
 
+	public function testRenderToString(): void
+	{
+		$this->assertIsString(
+			$this->control->renderToString(
+				[
+					TestComponentProps::STRING => 'some string',
+					TestComponentProps::COLLECTION => [['one' => 'One', 'two' => 2]],
+				]
+			)
+		);
+	}
+
 	public function testRenderThrowsException(): void
 	{
 		$this->expectException(InvalidArgumentException::class);
