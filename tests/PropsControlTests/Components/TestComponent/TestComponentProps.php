@@ -16,6 +16,14 @@ class TestComponentProps extends Props
 
 	public const STRING = 'string';
 
+	public const TYPE = 'type';
+
+	public const TYPE_ONE = 'one';
+
+	public const TYPE_TWO = 'two';
+
+	public const TYPES = [self::TYPE_ONE, self::TYPE_TWO];
+
 	/**
 	 * @inheritDoc
 	 */
@@ -28,6 +36,7 @@ class TestComponentProps extends Props
 			),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),
+			self::TYPE => Expect::anyOf(...self::TYPES)->default(self::TYPE_ONE),
 		];
 	}
 }

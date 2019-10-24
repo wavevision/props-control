@@ -52,7 +52,7 @@ class PropsControlTest extends TestCase
 		);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
-		$this->assertEquals('test-component test-component--boolean', $root->attr('class'));
+		$this->assertEquals('test-component test-component--boolean test-component--one', $root->attr('class'));
 		$this->assertEquals(1, $root->count());
 		$this->assertCount(3, $root->children());
 		$parts = $crawler->filter('div.test-component-part__element');

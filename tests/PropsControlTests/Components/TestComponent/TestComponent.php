@@ -13,8 +13,9 @@ class TestComponent extends PropsControl
 	 */
 	/**
 	 * Choose which props behave as CSS class modifiers if they are truthy
+	 * If you want a prop's value to behave as modifier, use $prop => true
 	 */
-	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN_VALUE];
+	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN_VALUE, TestComponentProps::TYPE => true];
 
 	protected function beforeMapPropsToTemplate(object $props): void
 	{

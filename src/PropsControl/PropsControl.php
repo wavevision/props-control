@@ -92,9 +92,11 @@ abstract class PropsControl extends BaseControl
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
-		foreach (static::CLASS_NAME_MODIFIERS as $modifier) {
-			if ($this->getMappedProp($modifier)) {
-				$this->template->{self::MODIFIERS}[] = $modifier;
+		foreach (static::CLASS_NAME_MODIFIERS as $k => $v) {
+			$value = $v === true;
+			$modifier = $value ? $k : $v;
+			if ($prop = $this->getMappedProp($modifier)) {
+				$this->template->{self::MODIFIERS}[] = $value ? $prop : $modifier;
 			}
 		}
 		$this->beforeRender($props);
