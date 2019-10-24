@@ -28,4 +28,9 @@ class TestComponent extends PropsControl
 		parent::beforeRender($props);
 		// do stuff before component is rendered
 	}
+
+	protected function getPropsClass(): string
+	{
+		return TestComponentProps::class;
+	}
 }

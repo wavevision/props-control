@@ -7,4 +7,8 @@ use Wavevision\PropsControl\PropsControl;
 class InvalidComponent extends PropsControl
 {
 
+	protected function getPropsClass(): string
+	{
+		return '';
+	}
 }

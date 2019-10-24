@@ -100,6 +100,8 @@ abstract class PropsControl extends BaseControl
 		$this->beforeRender($props);
 	}
 
+	abstract protected function getPropsClass(): string;
+
 	/**
 	 * @inheritDoc
 	 */
@@ -140,7 +142,7 @@ abstract class PropsControl extends BaseControl
 	 */
 	private function createProps(array $props): Props
 	{
-		$class = static::class . Strings::firstUpper(self::PROPS);
+		$class = $this->getPropsClass();
 		if (!class_exists($class)) {
 			throw new InvalidStateException("Props definition '$class' does not exist.");
 		}
