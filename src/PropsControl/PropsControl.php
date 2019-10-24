@@ -12,22 +12,26 @@ use Wavevision\Utils\Strings;
 abstract class PropsControl extends BaseControl
 {
 
-	public const CLASS_NAME = '';
-
-	public const CLASS_NAME_MODIFIERS = [];
+	private const CLASS_NAME = 'className';
 
 	private const MODIFIERS = 'modifiers';
 
 	private const PROPS = 'props';
 
-	private const TEMPLATE_CLASS_NAME = 'className';
-
-	public function getBaseClassName(): string
+	public function getClassName(): string
 	{
-		return static::CLASS_NAME ?: Strings::camelCaseToDashCase($this->getNameFromClass());
+		return Strings::camelCaseToDashCase($this->getControlName());
 	}
 
-	public function getNameFromClass(): string
+	/**
+	 * @return mixed[]
+	 */
+	public function getClassNameModifiers(): array
+	{
+		return [];
+	}
+
+	public function getControlName(): string
 	{
 		return Strings::getClassName(static::class, true);
 	}
@@ -92,7 +96,13 @@ abstract class PropsControl extends BaseControl
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
-		foreach (static::CLASS_NAME_MODIFIERS as $k => $v) {
+		foreach ($this->getClassNameModifiers() as $k => $v) {
+			if (is_callable($v)) {
+				if ($v($props) === true) {
+					$this->template->{self::MODIFIERS}[] = $k;
+				}
+				continue;
+			}
 			$value = $v === true;
 			$modifier = $value ? $k : $v;
 			if ($prop = $this->getMappedProp($modifier)) {
@@ -109,7 +119,7 @@ abstract class PropsControl extends BaseControl
 	 */
 	protected function getTemplateParameters(): array
 	{
-		return [self::TEMPLATE_CLASS_NAME => $this->createClassName()];
+		return [self::CLASS_NAME => $this->createClassName()];
 	}
 
 	/**
@@ -131,7 +141,7 @@ abstract class PropsControl extends BaseControl
 	private function createClassName(): ClassName
 	{
 		return new ClassName(
-			$this->getBaseClassName(),
+			$this->getClassName(),
 			function (): array {
 				return $this->getMappedModifiers();
 			}
@@ -150,4 +160,5 @@ abstract class PropsControl extends BaseControl
 		}
 		return new $class($props);
 	}
+
 }

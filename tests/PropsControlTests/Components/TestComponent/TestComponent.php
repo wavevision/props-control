@@ -7,15 +7,33 @@ use Wavevision\PropsControl\PropsControl;
 class TestComponent extends PropsControl
 {
 
+	public function getClassName(): string
+	{
+		// Optionally override to get custom CSS class (default generated from control class)
+		return parent::getClassName();
+	}
+
 	/**
-	 * Optionally override default CSS class generated from component class
-	 * public const CLASS_NAME = 'my-class';
+	 * @inheritDoc
 	 */
-	/**
-	 * Choose which props behave as CSS class modifiers if they are truthy
-	 * If you want a prop's value to behave as modifier, use $prop => true
-	 */
-	public const CLASS_NAME_MODIFIERS = [TestComponentProps::BOOLEAN_VALUE, TestComponentProps::TYPE => true];
+	public function getClassNameModifiers(): array
+	{
+		// Optionally define CSS class modifiers
+		return [
+			// If 'booleanValue' prop is truthy, its name will be used as CSS class modifier
+			TestComponentProps::BOOLEAN_VALUE,
+			// Use 'type' prop value as a modifier
+			TestComponentProps::TYPE => true,
+			// Define custom modifier, $modifier => callback(object $props): bool, if true modifier will be used
+			'custom' => function (object $props): bool {
+				// $props have been validated, we're accessing nullable prop
+				if ($entity = $props->{TestComponentProps::ENTITY}) {
+					return $entity->enabled;
+				}
+				return false;
+			},
+		];
+	}
 
 	protected function beforeMapPropsToTemplate(object $props): void
 	{

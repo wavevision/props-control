@@ -12,6 +12,8 @@ class TestComponentProps extends Props
 
 	public const COLLECTION = 'collection';
 
+	public const ENTITY = 'entity';
+
 	public const NULLABLE_NUMBER = 'nullableNumber';
 
 	public const STRING = 'string';
@@ -34,6 +36,7 @@ class TestComponentProps extends Props
 			self::COLLECTION => Expect::arrayOf(
 				Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])
 			),
+			self::ENTITY => Expect::type(\stdClass::class)->nullable(),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),
 			self::TYPE => Expect::anyOf(...self::TYPES)->default(self::TYPE_ONE),

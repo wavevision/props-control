@@ -44,15 +44,21 @@ class PropsControlTest extends TestCase
 	public function testRender(): void
 	{
 		ob_start();
+		$entity = new \stdClass();
+		$entity->enabled = true;
 		$this->control->render(
 			[
+				TestComponentProps::ENTITY => $entity,
 				TestComponentProps::STRING => 'some string',
 				TestComponentProps::COLLECTION => [['one' => 'One', 'two' => 2]],
 			]
 		);
 		$crawler = new Crawler(ob_get_clean());
 		$root = $crawler->filter('div.test-component');
-		$this->assertEquals('test-component test-component--boolean test-component--one', $root->attr('class'));
+		$this->assertEquals(
+			'test-component test-component--boolean test-component--one test-component--custom',
+			$root->attr('class')
+		);
 		$this->assertEquals(1, $root->count());
 		$this->assertCount(3, $root->children());
 		$parts = $crawler->filter('div.test-component-part__element');
