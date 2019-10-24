@@ -12,6 +12,8 @@ use Wavevision\Utils\Strings;
 abstract class PropsControl extends BaseControl
 {
 
+	protected const USE_VALUE = 'USE_VALUE';
+
 	private const CLASS_NAME = 'className';
 
 	private const MODIFIERS = 'modifiers';
@@ -103,7 +105,7 @@ abstract class PropsControl extends BaseControl
 				}
 				continue;
 			}
-			$value = $v === true;
+			$value = $v === self::USE_VALUE;
 			$modifier = $value ? $k : $v;
 			if ($prop = $this->getMappedProp($modifier)) {
 				$this->template->{self::MODIFIERS}[] = $value ? $prop : $modifier;
@@ -160,5 +162,4 @@ abstract class PropsControl extends BaseControl
 		}
 		return new $class($props);
 	}
-
 }

@@ -23,7 +23,7 @@ class TestComponent extends PropsControl
 			// If 'booleanValue' prop is truthy, its name will be used as CSS class modifier
 			TestComponentProps::BOOLEAN_VALUE,
 			// Use 'type' prop value as a modifier
-			TestComponentProps::TYPE => true,
+			TestComponentProps::TYPE => self::USE_VALUE,
 			// Define custom modifier, $modifier => callback(object $props): bool, if true modifier will be used
 			'custom' => function (object $props): bool {
 				// $props have been validated, we're accessing nullable prop
