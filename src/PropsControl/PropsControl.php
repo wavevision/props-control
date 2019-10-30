@@ -2,6 +2,7 @@
 
 namespace Wavevision\PropsControl;
 
+use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use Wavevision\Utils\Strings;
@@ -19,6 +20,15 @@ abstract class PropsControl extends BaseControl
 	private const MODIFIERS = 'modifiers';
 
 	private const PROPS = 'props';
+
+	public function __construct()
+	{
+		$this->onCreateTemplate(
+			function (Template $template): void {
+				$template->setParameters([self::CLASS_NAME => $this->createClassName()]);
+			}
+		);
+	}
 
 	public function getClassName(): string
 	{
@@ -115,14 +125,6 @@ abstract class PropsControl extends BaseControl
 	}
 
 	abstract protected function getPropsClass(): string;
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getTemplateParameters(): array
-	{
-		return [self::CLASS_NAME => $this->createClassName()];
-	}
 
 	/**
 	 * @param mixed[]|object $props

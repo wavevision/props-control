@@ -18,6 +18,7 @@ class TestComponent extends PropsControl
 	 */
 	public function getClassNameModifiers(): array
 	{
+		parent::getClassNameModifiers();
 		// Optionally define CSS class modifiers
 		return [
 			// If 'booleanValue' prop is truthy, its name will be used as CSS class modifier

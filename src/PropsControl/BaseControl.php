@@ -15,23 +15,26 @@ abstract class BaseControl extends Control
 
 	protected const DEFAULT_TEMPLATE = 'default';
 
+	/**
+	 * @var callable[]
+	 */
+	private $onCreateTemplate = [];
+
+	protected function onCreateTemplate(callable $callback): self
+	{
+		$this->onCreateTemplate[] = $callback;
+		return $this;
+	}
+
 	protected function createTemplate(): ITemplate
 	{
 		/** @var Template $template */
 		$template = parent::createTemplate();
-		if ($parameters = $this->getTemplateParameters()) {
-			$template->setParameters($parameters);
+		foreach ($this->onCreateTemplate as $callback) {
+			$callback($template);
 		}
 		$template->setFile($this->getTemplateFile());
 		return $template;
-	}
-
-	/**
-	 * @return mixed[]|null
-	 */
-	protected function getTemplateParameters(): ?array
-	{
-		return null;
 	}
 
 	private function getTemplateFile(): string
