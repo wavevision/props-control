@@ -54,14 +54,14 @@ class PropsControlTest extends TestCase
 			]
 		);
 		$crawler = new Crawler(ob_get_clean());
-		$root = $crawler->filter('div.test-component');
+		$root = $crawler->filter('div.tc');
 		$this->assertEquals(
-			'test-component test-component--boolean test-component--one test-component--custom',
+			'tc tc--boolean tc--one tc--custom tc--some-other-modifier',
 			$root->attr('class')
 		);
 		$this->assertEquals(1, $root->count());
 		$this->assertCount(3, $root->children());
-		$parts = $crawler->filter('div.test-component-part__element');
+		$parts = $crawler->filter('div.tc-part__element');
 		$this->assertCount(5, $parts);
 		$this->assertTrue(strpos($parts->first()->attr('class'), 'first') !== false);
 		$this->assertTrue(strpos($parts->last()->attr('class'), 'last') !== false);
@@ -69,7 +69,7 @@ class PropsControlTest extends TestCase
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());
 		$this->assertEquals('other-block other-block--some-modifier', $other->attr('class'));
-		$shapes = $root->filter('div.test-component__collection');
+		$shapes = $root->filter('div.tc__collection');
 		$this->assertCount(1, $shapes->children());
 		$this->assertEquals('One / 2', $shapes->children()->first()->text());
 	}

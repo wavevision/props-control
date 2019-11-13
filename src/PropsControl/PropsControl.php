@@ -110,8 +110,8 @@ abstract class PropsControl extends BaseControl
 		$this->template->{self::MODIFIERS} = [];
 		foreach ($this->getClassNameModifiers() as $k => $v) {
 			if (is_callable($v)) {
-				if ($v($props) === true) {
-					$this->template->{self::MODIFIERS}[] = $k;
+				if ($modifier = $v($props)) {
+					$this->template->{self::MODIFIERS}[] = is_string($modifier) ? $modifier : $k;
 				}
 				continue;
 			}

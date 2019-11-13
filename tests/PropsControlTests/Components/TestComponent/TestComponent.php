@@ -10,7 +10,8 @@ class TestComponent extends PropsControl
 	public function getClassName(): string
 	{
 		// Optionally override to get custom CSS class (default generated from control class)
-		return parent::getClassName();
+		parent::getClassName();
+		return 'tc';
 	}
 
 	/**
@@ -25,13 +26,17 @@ class TestComponent extends PropsControl
 			TestComponentProps::BOOLEAN_VALUE,
 			// Use 'type' prop value as a modifier
 			TestComponentProps::TYPE => self::USE_VALUE,
-			// Define custom modifier, $modifier => callback(object $props): bool, if true modifier will be used
+			// Define custom modifier, $modifier => callback(object $props), if truthy modifier will be used...
 			'custom' => function (object $props): bool {
 				// $props have been validated, we're accessing nullable prop
 				if ($entity = $props->{TestComponentProps::ENTITY}) {
 					return $entity->enabled;
 				}
 				return false;
+			},
+			// ...or if a string is returned, it will be used as modifier
+			'another' => function (): string {
+				return 'some-other-modifier';
 			},
 		];
 	}
