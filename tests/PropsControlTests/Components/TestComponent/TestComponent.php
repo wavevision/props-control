@@ -26,7 +26,7 @@ class TestComponent extends PropsControl
 			TestComponentProps::BOOLEAN_VALUE,
 			// Use 'type' prop value as a modifier
 			TestComponentProps::TYPE => self::USE_VALUE,
-			// Define custom modifier, $modifier => callback(object $props), if truthy modifier will be used...
+			// Define custom modifier, $modifier => callback(object $props), if truthy, modifier will be used...
 			'custom' => function (object $props): bool {
 				// $props have been validated, we're accessing nullable prop
 				if ($entity = $props->{TestComponentProps::ENTITY}) {
@@ -35,7 +35,7 @@ class TestComponent extends PropsControl
 				return false;
 			},
 			// ...or if a string is returned, it will be used as modifier
-			'another' => function (): string {
+			function (): string {
 				return 'some-other-modifier';
 			},
 		];
