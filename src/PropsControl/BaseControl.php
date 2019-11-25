@@ -20,7 +20,7 @@ abstract class BaseControl extends Control
 	 */
 	private $onCreateTemplate = [];
 
-	protected function onCreateTemplate(callable $callback): self
+	final protected function onCreateTemplate(callable $callback): self
 	{
 		$this->onCreateTemplate[] = $callback;
 		return $this;
@@ -37,12 +37,15 @@ abstract class BaseControl extends Control
 		return $template;
 	}
 
-	private function getTemplateFile(): string
+	final protected function getTemplateFile(?string $template = null): string
 	{
+		if (!$template) {
+			$template = static::DEFAULT_TEMPLATE;
+		}
 		$file = $this->getReflection()->getFileName();
 		if ($file === false) {
 			throw new InvalidStateException(sprintf('Unable to get filename for "%s".', static::class));
 		}
-		return dirname($file) . '/templates/' . static::DEFAULT_TEMPLATE . '.latte';
+		return dirname($file) . "/templates/$template.latte";
 	}
 }
