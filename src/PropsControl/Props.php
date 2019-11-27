@@ -35,23 +35,32 @@ abstract class Props
 	{
 		$this->data = $data;
 		$this->processor = new Processor();
-		$this->schema = Expect::structure($this->define());
+		$this->schema = Expect::structure($this->define())->castTo(ValidProps::class);
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getData(): array
+	{
+		return $this->data;
 	}
 
 	/**
 	 * @param mixed[]|null $data
-	 * @return object
 	 */
-	public function process(?array $data = null): object
+	final public function process(?array $data = null): ValidProps
 	{
-		if ($data === null) {
-			$data = $this->data;
-		}
-		return $this->processor->process($this->schema, $data);
+		/** @var ValidProps $props */
+		$props = $this->processor->process($this->schema, $data ?: $this->getData());
+		return $props
+			->setProps($this)
+			->lock();
 	}
 
 	/**
 	 * @return Schema[]
 	 */
 	abstract protected function define(): array;
+
 }

@@ -18,7 +18,8 @@ class PropsControlTemplate extends Template
 	public $modifiers;
 
 	/**
-	 * @var object
+	 * @var ValidProps
 	 */
 	public $props;
+
 }

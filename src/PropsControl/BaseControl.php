@@ -48,4 +48,5 @@ abstract class BaseControl extends Control
 		}
 		return dirname($file) . "/templates/$template.latte";
 	}
+
 }
