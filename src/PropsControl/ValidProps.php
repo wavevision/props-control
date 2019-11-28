@@ -49,11 +49,12 @@ final class ValidProps extends stdClass
 	}
 
 	/**
-	 * @return mixed|null
+	 * @param mixed $default
+	 * @return mixed
 	 */
-	public function getNullable(string $prop)
+	public function getNullable(string $prop, $default = null)
 	{
-		return $this->isSet($prop) ? $this->get($prop) : null;
+		return $this->isSet($prop) ? $this->get($prop) : $default;
 	}
 
 	public function isSet(string $prop): bool
