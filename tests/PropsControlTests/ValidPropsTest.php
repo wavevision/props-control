@@ -2,9 +2,8 @@
 
 namespace Wavevision\PropsControlTests;
 
+use Nette\MemberAccessException;
 use PHPUnit\Framework\TestCase;
-use Wavevision\PropsControl\Exceptions\InvalidState;
-use Wavevision\PropsControl\Exceptions\UndefinedProp;
 use Wavevision\PropsControl\ValidProps;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 
@@ -16,32 +15,30 @@ class ValidPropsTest extends TestCase
 
 	public function testGet(): void
 	{
-		$validProps = new ValidProps();
-		$validProps->prop = 'value';
+		$validProps = new ValidProps(['prop' => 'value']);
 		$this->assertEquals('value', $validProps->get('prop'));
 	}
 
 	public function testGetProps(): void
 	{
 		$props = new TestComponentProps();
-		$validProps = new ValidProps();
+		$validProps = new ValidProps([]);
 		$validProps->setProps($props);
 		$this->assertSame($props, $validProps->getProps());
 	}
 
-	public function testGetThrowsUndefinedProp(): void
+	public function testGetThrowsMemberAccessException(): void
 	{
-		$validProps = new ValidProps();
-		$validProps->prop = 'value';
+		$validProps = new ValidProps(['prop' => 'value']);
 		$this->assertEquals('value', $validProps->prop);
-		$this->expectException(UndefinedProp::class);
+		$this->expectException(MemberAccessException::class);
 		$validProps->undefinedProp;
 	}
 
-	public function testSetThrowsInvalidState(): void
+	public function testSetThrowsMemberAccessException(): void
 	{
-		$validProps = (new ValidProps())->lock();
-		$this->expectException(InvalidState::class);
+		$validProps = new ValidProps([]);
+		$this->expectException(MemberAccessException::class);
 		$validProps->prop = 'value';
 	}
 

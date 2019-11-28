@@ -2,10 +2,9 @@
 
 namespace Wavevision\PropsControl;
 
+use Nette\MemberAccessException;
 use Nette\SmartObject;
 use stdClass;
-use Wavevision\PropsControl\Exceptions\InvalidState;
-use Wavevision\PropsControl\Exceptions\UndefinedProp;
 
 /**
  * @internal
@@ -16,11 +15,6 @@ final class ValidProps extends stdClass
 	use SmartObject;
 
 	/**
-	 * @var bool
-	 */
-	private $locked = false;
-
-	/**
 	 * @var Props|null
 	 */
 	private $props;
@@ -28,7 +22,15 @@ final class ValidProps extends stdClass
 	/**
 	 * @var mixed[]
 	 */
-	private $values = [];
+	private $values;
+
+	/**
+	 * @param mixed[] $values
+	 */
+	public function __construct(array $values)
+	{
+		$this->values = $values;
+	}
 
 	/**
 	 * @return mixed
@@ -36,20 +38,9 @@ final class ValidProps extends stdClass
 	public function &__get(string $name)
 	{
 		if (!$this->isSet($name)) {
-			throw new UndefinedProp("Prop '$name' does on exist in validated props object.");
+			throw new MemberAccessException("Prop '$name' does on exist in validated props object.");
 		}
 		return $this->values[$name];
-	}
-
-	/**
-	 * @param mixed $value
-	 */
-	public function __set(string $name, $value): void
-	{
-		if ($this->locked) {
-			throw new InvalidState("Cannot write prop '$name', validated props are read-only.");
-		}
-		$this->values[$name] = $value;
 	}
 
 	/**
@@ -71,12 +62,6 @@ final class ValidProps extends stdClass
 	public function isSet(string $prop): bool
 	{
 		return array_key_exists($prop, $this->values);
-	}
-
-	public function lock(): self
-	{
-		$this->locked = true;
-		return $this;
 	}
 
 	public function getProps(): ?Props
