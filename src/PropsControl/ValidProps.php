@@ -6,9 +6,6 @@ use Nette\MemberAccessException;
 use Nette\SmartObject;
 use stdClass;
 
-/**
- * @internal
- */
 final class ValidProps extends stdClass
 {
 
