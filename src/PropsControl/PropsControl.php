@@ -3,8 +3,8 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Bridges\ApplicationLatte\Template;
-use Nette\InvalidArgumentException;
-use Nette\InvalidStateException;
+use Wavevision\PropsControl\Exceptions\InvalidProps;
+use Wavevision\PropsControl\Exceptions\InvalidState;
 use Wavevision\Utils\Strings;
 
 /**
@@ -49,7 +49,7 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
-	 * @param object|mixed[] $props
+	 * @param mixed[]|object $props
 	 */
 	public function render($props): void
 	{
@@ -58,7 +58,7 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
-	 * @param object|mixed[] $props
+	 * @param mixed[]|object $props
 	 * @return string
 	 */
 	public function renderToString($props): string
@@ -67,11 +67,11 @@ abstract class PropsControl extends BaseControl
 		return $this->template->renderToString();
 	}
 
-	protected function beforeMapPropsToTemplate(object $props): void
+	protected function beforeMapPropsToTemplate(ValidProps $props): void
 	{
 	}
 
-	protected function beforeRender(object $props): void
+	protected function beforeRender(ValidProps $props): void
 	{
 	}
 
@@ -90,21 +90,19 @@ abstract class PropsControl extends BaseControl
 	final protected function getMappedProp(string $prop)
 	{
 		if ($props = $this->getMappedProps()) {
-			return $props->$prop ?? null;
+			return $props->getNullable($prop);
 		}
 		return null;
 	}
 
-	final protected function getMappedProps(): ?object
+	final protected function getMappedProps(): ?ValidProps
 	{
 		return $this->template->{self::PROPS} ?? null;
 	}
 
 	final protected function mapPropsToTemplate(object $props): void
 	{
-		if ($props instanceof Props) {
-			$props = $props->process();
-		}
+		$props = $this->validateProps($props);
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
@@ -135,9 +133,7 @@ abstract class PropsControl extends BaseControl
 			$props = $this->createProps($props);
 		}
 		if (!is_object($props)) {
-			throw new InvalidArgumentException(
-				sprintf('Render props must be array|object, "%s" given to "%s".', gettype($props), static::class)
-			);
+			throw $this->createInvalidProps('Render props must be array|object', $props);
 		}
 		$this->mapPropsToTemplate($props);
 	}
@@ -160,8 +156,38 @@ abstract class PropsControl extends BaseControl
 	{
 		$class = $this->getPropsClass();
 		if (!class_exists($class)) {
-			throw new InvalidStateException("Props definition '$class' does not exist.");
+			throw new InvalidState("Props definition '$class' does not exist.");
 		}
 		return new $class($props);
 	}
+
+	/**
+	 * @param mixed[]|object $props
+	 */
+	private function createInvalidProps(string $message, $props): InvalidProps
+	{
+		return new InvalidProps(
+			sprintf(
+				'%s, "%s" given to "%s".',
+				$message,
+				gettype($props),
+				static::class
+			)
+		);
+	}
+
+	private function validateProps(object $props): ValidProps
+	{
+		if ($props instanceof Props) {
+			$props = $props->process();
+		}
+		if (!($props instanceof ValidProps)) {
+			throw $this->createInvalidProps(
+				sprintf('Mapped props must be an instance of "%s"', ValidProps::class),
+				$props
+			);
+		}
+		return $props;
+	}
+
 }

@@ -18,4 +18,5 @@ class PropsTest extends TestCase
 		$this->expectException(ValidationException::class);
 		$props->process();
 	}
+
 }

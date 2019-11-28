@@ -5,10 +5,10 @@ namespace Wavevision\PropsControlTests;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
-use Nette\InvalidArgumentException;
-use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Wavevision\PropsControl\Exceptions\InvalidProps;
+use Wavevision\PropsControl\Exceptions\InvalidState;
 use Wavevision\PropsControl\PropsControl;
 use Wavevision\PropsControlTests\Components\InvalidComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
@@ -86,16 +86,23 @@ class PropsControlTest extends TestCase
 		);
 	}
 
-	public function testRenderThrowsException(): void
+	public function testRenderInvalidPropsNonObject(): void
 	{
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(InvalidProps::class);
 		$this->control->render(1);
+	}
+
+	public function testRenderInvalidPropsObject(): void
+	{
+		$this->expectException(InvalidProps::class);
+		$this->control->render(new \stdClass());
 	}
 
 	public function testCreatePropsThrowsException(): void
 	{
 		$control = new InvalidComponent();
-		$this->expectException(InvalidStateException::class);
+		$this->expectException(InvalidState::class);
 		$control->render([]);
 	}
+
 }

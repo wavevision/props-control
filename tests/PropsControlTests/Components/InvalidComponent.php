@@ -11,4 +11,5 @@ class InvalidComponent extends PropsControl
 	{
 		return '';
 	}
+
 }

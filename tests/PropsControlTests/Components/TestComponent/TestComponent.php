@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControlTests\Components\TestComponent;
 
 use Wavevision\PropsControl\PropsControl;
+use Wavevision\PropsControl\ValidProps;
 
 class TestComponent extends PropsControl
 {
@@ -26,10 +27,10 @@ class TestComponent extends PropsControl
 			TestComponentProps::BOOLEAN_VALUE,
 			// Use 'type' prop value as a modifier
 			TestComponentProps::TYPE => self::USE_VALUE,
-			// Define custom modifier, $modifier => callback(object $props), if truthy, modifier will be used...
-			'custom' => function (object $props): bool {
+			// Define custom modifier, $modifier => callback(ValidProps $props), if truthy, modifier will be used...
+			'custom' => function (ValidProps $props): bool {
 				// $props have been validated, we're accessing nullable prop
-				if ($entity = $props->{TestComponentProps::ENTITY}) {
+				if ($entity = $props->get(TestComponentProps::ENTITY)) {
 					return $entity->enabled;
 				}
 				return false;
@@ -41,14 +42,14 @@ class TestComponent extends PropsControl
 		];
 	}
 
-	protected function beforeMapPropsToTemplate(object $props): void
+	protected function beforeMapPropsToTemplate(ValidProps $props): void
 	{
 		parent::beforeMapPropsToTemplate($props);
 		// do stuff before valid props are sent to template, e.g. assign extra params to template
 		$this->template->setParameters(['undefinedProp' => $this->getMappedProp('undefinedProp')]);
 	}
 
-	protected function beforeRender(object $props): void
+	protected function beforeRender(ValidProps $props): void
 	{
 		parent::beforeRender($props);
 		// do stuff before component is rendered
@@ -58,4 +59,5 @@ class TestComponent extends PropsControl
 	{
 		return TestComponentProps::class;
 	}
+
 }

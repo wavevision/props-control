@@ -5,7 +5,6 @@ namespace Wavevision\PropsControl;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
-use Nette\InvalidStateException;
 
 /**
  * @property-read Template $template
@@ -42,10 +41,8 @@ abstract class BaseControl extends Control
 		if (!$template) {
 			$template = static::DEFAULT_TEMPLATE;
 		}
-		$file = $this->getReflection()->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException(sprintf('Unable to get filename for "%s".', static::class));
-		}
+		$file = (string)$this->getReflection()->getFileName();
 		return dirname($file) . "/templates/$template.latte";
 	}
+
 }

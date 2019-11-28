@@ -48,4 +48,5 @@ class ClassNameTest extends TestCase
 			}
 		);
 	}
+
 }
