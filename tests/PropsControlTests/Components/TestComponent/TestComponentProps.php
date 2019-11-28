@@ -42,4 +42,5 @@ class TestComponentProps extends Props
 			self::TYPE => Expect::anyOf(...self::TYPES)->default(self::TYPE_ONE),
 		];
 	}
+
 }
