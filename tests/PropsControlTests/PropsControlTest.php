@@ -5,6 +5,7 @@ namespace Wavevision\PropsControlTests;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
+use Nette\Schema\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
@@ -76,26 +77,21 @@ class PropsControlTest extends TestCase
 
 	public function testRenderToString(): void
 	{
-		$this->assertIsString(
-			$this->control->renderToString(
-				[
-					TestComponentProps::STRING => 'some string',
-					TestComponentProps::COLLECTION => [['one' => 'One', 'two' => 2]],
-				]
-			)
+		$props = new \stdClass();
+		$props->{TestComponentProps::STRING} = 'some string';
+		$props->{TestComponentProps::COLLECTION} = [['one' => 'One', 'two' => 2]];
+		$this->assertIsString($this->control->renderToString($props));
+		$props = new TestComponentProps(
+			[TestComponentProps::STRING => null, TestComponentProps::COLLECTION => []]
 		);
+		$this->expectException(ValidationException::class);
+		$this->control->renderToString($props);
 	}
 
-	public function testRenderInvalidPropsNonObject(): void
+	public function testRenderInvalidProps(): void
 	{
 		$this->expectException(InvalidProps::class);
 		$this->control->render(1);
-	}
-
-	public function testRenderInvalidPropsObject(): void
-	{
-		$this->expectException(InvalidProps::class);
-		$this->control->render(new \stdClass());
 	}
 
 	public function testCreatePropsThrowsException(): void

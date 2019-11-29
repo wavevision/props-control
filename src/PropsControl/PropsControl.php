@@ -100,9 +100,9 @@ abstract class PropsControl extends BaseControl
 		return $this->template->{self::PROPS} ?? null;
 	}
 
-	final protected function mapPropsToTemplate(object $props): void
+	final protected function mapPropsToTemplate(Props $props): void
 	{
-		$props = $this->validateProps($props);
+		$props = $props->process();
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
@@ -125,17 +125,14 @@ abstract class PropsControl extends BaseControl
 	abstract protected function getPropsClass(): string;
 
 	/**
-	 * @param mixed[]|object $props
+	 * @param mixed $props
 	 */
 	final protected function prepareRender($props): void
 	{
-		if (is_array($props)) {
-			$props = $this->createProps($props);
-		}
-		if (!is_object($props)) {
+		if (!is_array($props) && !is_object($props)) {
 			throw $this->createInvalidProps('Render props must be array|object', $props);
 		}
-		$this->mapPropsToTemplate($props);
+		$this->mapPropsToTemplate($props instanceof Props ? $props : $this->createProps((array)$props));
 	}
 
 	private function createClassName(): ClassName
@@ -174,20 +171,6 @@ abstract class PropsControl extends BaseControl
 				static::class
 			)
 		);
-	}
-
-	private function validateProps(object $props): ValidProps
-	{
-		if ($props instanceof Props) {
-			$props = $props->process();
-		}
-		if (!($props instanceof ValidProps)) {
-			throw $this->createInvalidProps(
-				sprintf('Mapped props must be an instance of "%s"', ValidProps::class),
-				$props
-			);
-		}
-		return $props;
 	}
 
 }
