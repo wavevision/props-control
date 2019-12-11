@@ -15,7 +15,7 @@ final class PropsUtils
 	/**
 	 * @return array<string, Schema>
 	 */
-	final public static function booleans(string ...$props): array
+	public static function booleans(string ...$props): array
 	{
 		/** @var array<string, Schema> $booleans */
 		$booleans = Arrays::mapKeysFromValues(
@@ -31,7 +31,7 @@ final class PropsUtils
 	 * @param Schema[] ...$props
 	 * @return Schema[]
 	 */
-	final public static function merge(array ...$props): array
+	public static function merge(array ...$props): array
 	{
 		return Arrays::mergeAllRecursive(...$props);
 	}
