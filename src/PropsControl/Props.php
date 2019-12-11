@@ -31,7 +31,7 @@ abstract class Props
 	/**
 	 * @param mixed[] $data
 	 */
-	public function __construct(array $data = [])
+	final public function __construct(array $data = [])
 	{
 		$this->data = $data;
 		$this->processor = new Processor();
@@ -41,7 +41,7 @@ abstract class Props
 	/**
 	 * @return mixed[]
 	 */
-	public function getData(): array
+	final public function getData(): array
 	{
 		return $this->data;
 	}
