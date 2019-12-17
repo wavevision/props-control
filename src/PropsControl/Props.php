@@ -16,17 +16,11 @@ abstract class Props
 	/**
 	 * @var mixed[]
 	 */
-	protected $data;
+	protected array $data;
 
-	/**
-	 * @var Structure
-	 */
-	protected $schema;
+	protected Structure $schema;
 
-	/**
-	 * @var Processor
-	 */
-	private $processor;
+	private Processor $processor;
 
 	/**
 	 * @param mixed[] $data

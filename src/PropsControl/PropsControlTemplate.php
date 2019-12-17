@@ -7,19 +7,13 @@ use Nette\Bridges\ApplicationLatte\Template;
 class PropsControlTemplate extends Template
 {
 
-	/**
-	 * @var ClassName
-	 */
-	public $className;
+	public ClassName $className;
 
 	/**
 	 * @var string[]
 	 */
-	public $modifiers;
+	public array $modifiers;
 
-	/**
-	 * @var ValidProps
-	 */
-	public $props;
+	public ValidProps $props;
 
 }

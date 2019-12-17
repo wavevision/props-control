@@ -2,24 +2,18 @@
 
 namespace Wavevision\PropsControl;
 
-use Nette\MemberAccessException;
-use Nette\SmartObject;
 use stdClass;
+use Wavevision\PropsControl\Exceptions\NotAllowed;
 
 final class ValidProps extends stdClass
 {
 
-	use SmartObject;
-
-	/**
-	 * @var Props|null
-	 */
-	private $props;
+	private ?Props $props;
 
 	/**
 	 * @var mixed[]
 	 */
-	private $values;
+	private array $values;
 
 	/**
 	 * @param mixed[] $values
@@ -30,14 +24,51 @@ final class ValidProps extends stdClass
 	}
 
 	/**
+	 * @param mixed[] $arguments
+	 */
+	public function __call(string $method, array $arguments): void
+	{
+		throw new NotAllowed("Cannot call an undefined method '$method'.");
+	}
+
+	/**
+	 * @param mixed[] $arguments
+	 */
+	public static function __callStatic(string $method, array $arguments): void
+	{
+		throw new NotAllowed("Cannot call an undefined static method '$method'.");
+	}
+
+	/**
 	 * @return mixed
 	 */
 	public function &__get(string $name)
 	{
 		if (!$this->isSet($name)) {
-			throw new MemberAccessException("Prop '$name' does on exist in validated props object.");
+			throw new NotAllowed("Cannot read an undeclared prop '$name'.");
 		}
 		return $this->values[$name];
+	}
+
+	/**
+	 * @param mixed $value
+	 */
+	public function __set(string $name, $value): void
+	{
+		if ($this->isSet($name)) {
+			throw new NotAllowed("Cannot write to a read-only prop '$name'.");
+		}
+		throw new NotAllowed("Cannot write to an undeclared prop '$name'.");
+	}
+
+	public function __isset(string $name): bool
+	{
+		return $this->isSet($name);
+	}
+
+	public function __unset(string $name): void
+	{
+		throw new NotAllowed("Cannot unset prop '$name', props are read-only.");
 	}
 
 	/**

@@ -15,7 +15,12 @@ final class ProcessedProps
 	/**
 	 * @var mixed[]
 	 */
-	private $values = [];
+	private array $values;
+
+	public function __construct()
+	{
+		$this->values = [];
+	}
 
 	/**
 	 * @param mixed $value

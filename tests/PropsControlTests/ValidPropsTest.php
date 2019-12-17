@@ -2,8 +2,8 @@
 
 namespace Wavevision\PropsControlTests;
 
-use Nette\MemberAccessException;
 use PHPUnit\Framework\TestCase;
+use Wavevision\PropsControl\Exceptions\NotAllowed;
 use Wavevision\PropsControl\ValidProps;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 
@@ -27,19 +27,53 @@ class ValidPropsTest extends TestCase
 		$this->assertSame($props, $validProps->getProps());
 	}
 
-	public function testGetThrowsMemberAccessException(): void
+	public function testGetThrowsNotAllowed(): void
 	{
 		$validProps = new ValidProps(['prop' => 'value']);
 		$this->assertEquals('value', $validProps->prop);
-		$this->expectException(MemberAccessException::class);
+		$this->expectException(NotAllowed::class);
 		$validProps->undefinedProp;
 	}
 
-	public function testSetThrowsMemberAccessException(): void
+	public function testSetThrowsNotAllowed(): void
 	{
 		$validProps = new ValidProps([]);
-		$this->expectException(MemberAccessException::class);
+		$this->expectException(NotAllowed::class);
 		$validProps->prop = 'value';
+	}
+
+	public function testSetExistingPropsThrowsNotAllowed(): void
+	{
+		$validProps = new ValidProps(['prop' => 'value']);
+		$this->expectException(NotAllowed::class);
+		$validProps->prop = 'anotherValue';
+	}
+
+	public function testCallThrowsNotAllowed(): void
+	{
+		$validProps = new ValidProps([]);
+		$this->expectException(NotAllowed::class);
+		$validProps->{'undefinedMethod'}();
+	}
+
+	public function testCallStaticThrowsNotAllowed(): void
+	{
+		$undefinedStaticMethod = 'undefinedStaticMethod';
+		$this->expectException(NotAllowed::class);
+		ValidProps::$undefinedStaticMethod();
+	}
+
+	public function testIsset(): void
+	{
+		$validProps = new ValidProps([]);
+		$this->assertFalse(isset($validProps->someProp));
+	}
+
+	public function testUnset(): void
+	{
+		$validProps = new ValidProps(['prop' => 'value']);
+		$this->expectException(NotAllowed::class);
+		unset($validProps->prop);
 	}
 
 }

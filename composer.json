@@ -27,8 +27,14 @@
       "Wavevision\\": "tests"
     }
   },
+  "config": {
+    "platform": {
+      "php": "7.4"
+    },
+    "sort-packages": true
+  },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "nette/application": "^3.0",
     "nette/schema": "^1.0",
     "wavevision/utils": "^1.2"

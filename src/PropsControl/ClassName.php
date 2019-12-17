@@ -16,35 +16,26 @@ class ClassName
 
 	private const SUB_BLOCK_DELIMITER = '-';
 
-	/**
-	 * @var string
-	 */
-	private $baseClass;
+	private string $baseClass;
 
-	/**
-	 * @var string
-	 */
-	private $elementDelimiter = self::ELEMENT_DELIMITER;
+	private string $elementDelimiter;
 
-	/**
-	 * @var string
-	 */
-	private $modifierDelimiter = self::MODIFIER_DELIMITER;
+	private string $modifierDelimiter;
 
 	/**
 	 * @var callable(): array<string>|null
 	 */
 	private $modifiersCallback;
 
-	/**
-	 * @var string
-	 */
-	private $subBlockDelimiter = self::SUB_BLOCK_DELIMITER;
+	private string $subBlockDelimiter;
 
 	public function __construct(string $baseClass, ?callable $modifiersCallback)
 	{
 		$this->baseClass = $baseClass;
+		$this->elementDelimiter = self::ELEMENT_DELIMITER;
+		$this->modifierDelimiter = self::MODIFIER_DELIMITER;
 		$this->modifiersCallback = $modifiersCallback;
+		$this->subBlockDelimiter = self::SUB_BLOCK_DELIMITER;
 	}
 
 	public function block(?string ...$modifiers): string
