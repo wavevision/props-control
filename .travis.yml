@@ -10,10 +10,11 @@ git:
 install:
   - composer install
 
+before_script:
+  - pecl install pcov
+
 jobs:
   include:
-    - before_script:
-        - pecl install pcov
     - script: composer phing ci
 
 cache:
