@@ -13,7 +13,7 @@ install:
 jobs:
   include:
     - before_script:
-        - sudo apt install php-pcov
+        - pecl install pcov
     - script: composer phing ci
 
 cache:
