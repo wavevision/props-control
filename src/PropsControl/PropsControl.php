@@ -139,9 +139,7 @@ abstract class PropsControl extends BaseControl
 	{
 		return new ClassName(
 			$this->getClassName(),
-			function (): array {
-				return $this->getMappedModifiers();
-			}
+			fn(): array => $this->getMappedModifiers()
 		);
 	}
 
