@@ -8,7 +8,7 @@ use Wavevision\PropsControl\Exceptions\NotAllowed;
 final class ValidProps extends stdClass
 {
 
-	private ?Props $props;
+	private Props $props;
 
 	/**
 	 * @var mixed[]
@@ -18,8 +18,9 @@ final class ValidProps extends stdClass
 	/**
 	 * @param mixed[] $values
 	 */
-	public function __construct(array $values)
+	public function __construct(Props $props, array $values)
 	{
+		$this->props = $props;
 		$this->values = $values;
 	}
 
@@ -93,15 +94,9 @@ final class ValidProps extends stdClass
 		return array_key_exists($prop, $this->values);
 	}
 
-	public function getProps(): ?Props
+	public function getProps(): Props
 	{
 		return $this->props;
-	}
-
-	public function setProps(Props $props): self
-	{
-		$this->props = $props;
-		return $this;
 	}
 
 }
