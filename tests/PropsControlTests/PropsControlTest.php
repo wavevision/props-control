@@ -6,6 +6,7 @@ use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\DI\Container;
 use Nette\Schema\ValidationException;
+use Nette\Utils\Html;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
@@ -73,6 +74,11 @@ class PropsControlTest extends TestCase
 		$shapes = $root->filter('div.tc__collection');
 		$this->assertCount(1, $shapes->children());
 		$this->assertEquals('One / 2', $shapes->children()->first()->text());
+	}
+
+	public function testRenderToHtml(): void
+	{
+		$this->assertInstanceOf(Html::class, $this->control->renderToHtml([TestComponentProps::STRING => 'string']));
 	}
 
 	public function testRenderToString(): void

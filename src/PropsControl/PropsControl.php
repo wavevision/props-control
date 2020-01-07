@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Utils\Html;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
 use Wavevision\Utils\Strings;
@@ -55,6 +56,14 @@ abstract class PropsControl extends BaseControl
 	{
 		$this->prepareRender($props);
 		$this->template->render();
+	}
+
+	/**
+	 * @param mixed[]|object $props
+	 */
+	public function renderToHtml($props): Html
+	{
+		return Html::el()->setHtml($this->renderToString($props));
 	}
 
 	/**
