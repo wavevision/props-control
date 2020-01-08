@@ -38,7 +38,7 @@ class PropTypes
 
 	public static function renderable(): AnyOf
 	{
-		return Expect::anyOf(self::controllable(), Expect::string(), Html::class);
+		return Expect::anyOf(self::controllable(), Expect::string(), Expect::type(Html::class));
 	}
 
 }
