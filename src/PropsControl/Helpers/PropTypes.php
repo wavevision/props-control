@@ -1,13 +1,17 @@
 <?php declare (strict_types = 1);
 
-namespace Wavevision\PropsControl;
+namespace Wavevision\PropsControl\Helpers;
 
+use Nette\Application\UI\Control;
+use Nette\Schema\Elements\AnyOf;
+use Nette\Schema\Elements\Type;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use Nette\StaticClass;
+use Nette\Utils\Html;
 use Wavevision\Utils\Arrays;
 
-final class PropsUtils
+class PropTypes
 {
 
 	use StaticClass;
@@ -27,13 +31,14 @@ final class PropsUtils
 		return $booleans;
 	}
 
-	/**
-	 * @param Schema[] ...$props
-	 * @return Schema[]
-	 */
-	public static function merge(array ...$props): array
+	public static function controllable(): Type
 	{
-		return Arrays::mergeAllRecursive(...$props);
+		return Expect::type(Control::class);
+	}
+
+	public static function renderable(): AnyOf
+	{
+		return Expect::anyOf(self::controllable(), Expect::string(), Html::class);
 	}
 
 }

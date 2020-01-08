@@ -6,6 +6,8 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Utils\Html;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
+use Wavevision\PropsControl\Helpers\ClassName;
+use Wavevision\PropsControl\Helpers\Render;
 use Wavevision\Utils\Strings;
 
 /**
@@ -63,7 +65,7 @@ abstract class PropsControl extends BaseControl
 	 */
 	public function renderToHtml($props): Html
 	{
-		return Html::el()->setHtml($this->renderToString($props));
+		return Render::toHtml($this->renderToString($props));
 	}
 
 	/**

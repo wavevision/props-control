@@ -1,12 +1,12 @@
 <?php declare (strict_types = 1);
 
-namespace Wavevision\PropsControlTests;
+namespace Wavevision\PropsControlTests\Helpers;
 
 use PHPUnit\Framework\TestCase;
-use Wavevision\PropsControl\ClassName;
+use Wavevision\PropsControl\Helpers\ClassName;
 
 /**
- * @covers \Wavevision\PropsControl\ClassName
+ * @covers \Wavevision\PropsControl\Helpers\ClassName
  */
 class ClassNameTest extends TestCase
 {

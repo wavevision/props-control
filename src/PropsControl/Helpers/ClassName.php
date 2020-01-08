@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace Wavevision\PropsControl;
+namespace Wavevision\PropsControl\Helpers;
 
 use Nette\SmartObject;
 use Wavevision\Utils\Strings;

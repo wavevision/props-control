@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Bridges\ApplicationLatte\Template;
+use Wavevision\PropsControl\Helpers\ClassName;
 
 class PropsControlTemplate extends Template
 {
