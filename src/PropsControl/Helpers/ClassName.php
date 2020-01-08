@@ -29,7 +29,7 @@ class ClassName
 
 	private string $subBlockDelimiter;
 
-	public function __construct(string $baseClass, ?callable $modifiersCallback)
+	public function __construct(string $baseClass, ?callable $modifiersCallback = null)
 	{
 		$this->baseClass = $baseClass;
 		$this->elementDelimiter = self::ELEMENT_DELIMITER;
@@ -57,6 +57,14 @@ class ClassName
 	public function element(string $className, ?string ...$modifiers): string
 	{
 		return $this->composeClassNames($this->baseClass . $this->elementDelimiter . $className, $modifiers);
+	}
+
+	public function extra(string $className, string $prefix = ''): string
+	{
+		if ($prefix !== '') {
+			return $prefix . $this->subBlockDelimiter . $className;
+		}
+		return $className;
 	}
 
 	public function getBaseClass(): string

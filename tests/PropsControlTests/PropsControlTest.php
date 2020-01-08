@@ -61,6 +61,7 @@ class PropsControlTest extends TestCase
 			'tc tc--boolean tc--one tc--custom tc--some-other-modifier',
 			$root->attr('class')
 		);
+		$this->assertEquals('line-height:1.4', $root->attr('style'));
 		$this->assertEquals(1, $root->count());
 		$this->assertCount(3, $root->children());
 		$parts = $crawler->filter('div.tc-part__element');

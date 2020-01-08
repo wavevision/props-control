@@ -42,6 +42,16 @@ class TestComponent extends PropsControl
 		];
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getStyleProps(): array
+	{
+		// Optionally define which prop values will be used to assemble style attribute
+		parent::getStyleProps();
+		return [TestComponentProps::LINE_HEIGHT];
+	}
+
 	protected function beforeMapPropsToTemplate(ValidProps $props): void
 	{
 		parent::beforeMapPropsToTemplate($props);

@@ -8,6 +8,7 @@ use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
 use Wavevision\PropsControl\Helpers\ClassName;
 use Wavevision\PropsControl\Helpers\Render;
+use Wavevision\PropsControl\Helpers\Style;
 use Wavevision\Utils\Strings;
 
 /**
@@ -24,11 +25,18 @@ abstract class PropsControl extends BaseControl
 
 	private const PROPS = 'props';
 
+	private const STYLE = 'style';
+
 	public function __construct()
 	{
 		$this->onCreateTemplate(
 			function (Template $template): void {
-				$template->setParameters([self::CLASS_NAME => $this->createClassName()]);
+				$template->setParameters(
+					[
+						self::CLASS_NAME => $this->createClassName(),
+						self::STYLE => new Style(),
+					]
+				);
 			}
 		);
 	}
@@ -49,6 +57,14 @@ abstract class PropsControl extends BaseControl
 	public function getControlName(): string
 	{
 		return Strings::getClassName(static::class, true);
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getStyleProps(): array
+	{
+		return [];
 	}
 
 	/**
@@ -114,6 +130,7 @@ abstract class PropsControl extends BaseControl
 	final protected function mapPropsToTemplate(Props $props): void
 	{
 		$props = $props->process();
+		$this->prepareStyle($props);
 		$this->beforeMapPropsToTemplate($props);
 		$this->template->{self::PROPS} = $props;
 		$this->template->{self::MODIFIERS} = [];
@@ -180,6 +197,15 @@ abstract class PropsControl extends BaseControl
 				static::class
 			)
 		);
+	}
+
+	private function prepareStyle(ValidProps $props): void
+	{
+		foreach ($this->getStyleProps() as $prop) {
+			if ($value = $props->get($prop)) {
+				$this->template->style->add($prop, $value);
+			}
+		}
 	}
 
 }

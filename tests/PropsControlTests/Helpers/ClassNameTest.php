@@ -39,6 +39,13 @@ class ClassNameTest extends TestCase
 		$this->assertEquals('my-class__element', $className->element('element'));
 	}
 
+	public function testExtra(): void
+	{
+		$className = new ClassName('');
+		$this->assertEquals('extra', $className->extra('extra'));
+		$this->assertEquals('prefixed-extra', $className->extra('extra', 'prefixed'));
+	}
+
 	private function createClassName(string $baseClass = '', string ...$modifiers): ClassName
 	{
 		return new ClassName(
