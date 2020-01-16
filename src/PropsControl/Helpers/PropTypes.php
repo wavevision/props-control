@@ -36,9 +36,19 @@ class PropTypes
 		return Expect::type(Control::class);
 	}
 
+	public static function html(): Type
+	{
+		return Expect::type(Html::class);
+	}
+
+	public static function pureRenderable(): AnyOf
+	{
+		return Expect::anyOf(Expect::string(), self::html());
+	}
+
 	public static function renderable(): AnyOf
 	{
-		return Expect::anyOf(self::controllable(), Expect::string(), Expect::type(Html::class));
+		return Expect::anyOf(self::controllable(), self::pureRenderable());
 	}
 
 }
