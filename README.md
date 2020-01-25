@@ -1,4 +1,5 @@
-# Wavevision PropsControl
+<p align="center"><a href="https://github.com/wavevision"><img alt="Wavevision s.r.o." src="https://wavevision.com/images/wavevision-logo.png" width="120" /></a></p>
+<h1 align="center">PropsControl</h1>
 
 [![Build Status](https://travis-ci.org/wavevision/props-control.svg?branch=master)](https://travis-ci.org/wavevision/props-control)
 [![Coverage Status](https://coveralls.io/repos/github/wavevision/props-control/badge.svg?branch=master)](https://coveralls.io/github/wavevision/props-control?branch=master)
