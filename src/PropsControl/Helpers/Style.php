@@ -14,7 +14,7 @@ class Style
 	/**
 	 * @var mixed[]
 	 */
-	private $style = [];
+	private array $style = [];
 
 	public function __toString(): string
 	{

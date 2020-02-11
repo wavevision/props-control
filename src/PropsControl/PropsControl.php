@@ -86,7 +86,6 @@ abstract class PropsControl extends BaseControl
 
 	/**
 	 * @param mixed[]|object $props
-	 * @return string
 	 */
 	public function renderToString($props): string
 	{
@@ -111,7 +110,6 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
-	 * @param string $prop
 	 * @return mixed
 	 */
 	final protected function getMappedProp(string $prop)
@@ -173,7 +171,6 @@ abstract class PropsControl extends BaseControl
 
 	/**
 	 * @param mixed[] $props
-	 * @return Props
 	 */
 	private function createProps(array $props): Props
 	{

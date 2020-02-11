@@ -17,7 +17,7 @@ abstract class BaseControl extends Control
 	/**
 	 * @var callable[]
 	 */
-	private $onCreateTemplate = [];
+	private array $onCreateTemplate = [];
 
 	final protected function onCreateTemplate(callable $callback): self
 	{

@@ -20,15 +20,9 @@ use Wavevision\PropsControlTests\Presenters\TestPresenter;
 class PropsControlTest extends TestCase
 {
 
-	/**
-	 * @var Container
-	 */
-	private $container;
+	private Container $container;
 
-	/**
-	 * @var PropsControl
-	 */
-	private $control;
+	private PropsControl $control;
 
 	public function setUp(): void
 	{

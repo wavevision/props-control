@@ -91,9 +91,7 @@ class ClassName
 	}
 
 	/**
-	 * @param string $className
 	 * @param array<string|null> $modifiers
-	 * @return string
 	 */
 	private function composeClassNames(string $className, array $modifiers): string
 	{
