@@ -37,7 +37,7 @@
     "php": ">=7.4",
     "nette/application": "^3.0",
     "nette/schema": "^1.0",
-    "wavevision/utils": "^2.1"
+    "wavevision/utils": "^2.5"
   },
   "require-dev": {
     "jakub-onderka/php-parallel-lint": "^1.0",

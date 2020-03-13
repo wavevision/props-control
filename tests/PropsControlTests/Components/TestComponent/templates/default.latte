@@ -5,12 +5,12 @@
 	<div n:class="$className->element(collection)" n:inner-foreach="$props->collection as $item">
 		<p>{$item->one} / {$item->two}</p>
 	</div>
-	{var partClassName = $className->create(part)}
+	{var $partClassName = $className->create(part)}
 	<div n:class="$partClassName->block()" n:inner-foreach="[1,2,3,4,5] as $part">
 		<div n:class="$partClassName->element(element, $part === 1 ? first : null, $part === 5 ? last : null)"></div>
 	</div>
 </div>
-{var otherClassName = $className->create(other-block, false, true)}
+{var $otherClassName = $className->create(other-block, false, true)}
 <div n:class="$otherClassName->block(some-modifier)">
 	<div n:class="$otherClassName->element(element, another-modifier)"></div>
 </div>

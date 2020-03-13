@@ -19,7 +19,7 @@ abstract class PropsControl extends BaseControl
 
 	protected const USE_VALUE = 'USE_VALUE';
 
-	private const CLASS_NAME = 'className';
+	private const CLASS_NAME = ClassName::PROP;
 
 	private const MODIFIERS = 'modifiers';
 

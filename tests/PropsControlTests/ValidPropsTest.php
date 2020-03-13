@@ -19,6 +19,13 @@ class ValidPropsTest extends TestCase
 		$this->assertEquals('value', $validProps->get('prop'));
 	}
 
+	public function testGetNullable(): void
+	{
+		$validProps = new ValidProps(new TestComponentProps(), ['prop' => 'value', 'another' => null]);
+		$this->assertEquals('fallback', $validProps->getNullable('another', 'fallback'));
+		$this->assertNull($validProps->getNullable('undefined'));
+	}
+
 	public function testGetProps(): void
 	{
 		$props = new TestComponentProps();

@@ -10,6 +10,8 @@ class ClassName
 
 	use SmartObject;
 
+	public const PROP = 'className';
+
 	private const ELEMENT_DELIMITER = '__';
 
 	private const MODIFIER_DELIMITER = '--';

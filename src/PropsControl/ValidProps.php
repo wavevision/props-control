@@ -86,7 +86,10 @@ final class ValidProps extends stdClass
 	 */
 	public function getNullable(string $prop, $default = null)
 	{
-		return $this->isSet($prop) ? $this->get($prop) : $default;
+		if ($this->isSet($prop)) {
+			return $this->get($prop) ?? $default;
+		}
+		return $default;
 	}
 
 	public function isSet(string $prop): bool
