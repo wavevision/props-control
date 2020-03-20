@@ -27,6 +27,16 @@ abstract class PropsControl extends BaseControl
 
 	private const STYLE = 'style';
 
+	/**
+	 * @var array<callable(ValidProps, static): void> $beforeMapPropsToTemplateCallbacks
+	 */
+	private array $beforeMapPropsToTemplateCallbacks = [];
+
+	/**
+	 * @var array<callable(ValidProps, static): void> $beforeRenderCallbacks
+	 */
+	private array $beforeRenderCallbacks = [];
+
 	public function __construct()
 	{
 		$this->onCreateTemplate(
@@ -39,6 +49,24 @@ abstract class PropsControl extends BaseControl
 				);
 			}
 		);
+	}
+
+	/**
+	 * @param callable(ValidProps, static): void $beforeRender
+	 */
+	public function addBeforeRender(callable $beforeRender): self
+	{
+		$this->beforeRenderCallbacks[] = $beforeRender;
+		return $this;
+	}
+
+	/**
+	 * @param callable(ValidProps, static): void $beforeMapPropsToTemplate
+	 */
+	public function addBeforeMapPropsToTemplate(callable $beforeMapPropsToTemplate): self
+	{
+		$this->beforeMapPropsToTemplateCallbacks[] = $beforeMapPropsToTemplate;
+		return $this;
 	}
 
 	public function getClassName(): string
@@ -95,10 +123,16 @@ abstract class PropsControl extends BaseControl
 
 	protected function beforeMapPropsToTemplate(ValidProps $props): void
 	{
+		foreach ($this->beforeMapPropsToTemplateCallbacks as $beforeMapPropsToTemplate) {
+			$beforeMapPropsToTemplate($props, $this);
+		}
 	}
 
 	protected function beforeRender(ValidProps $props): void
 	{
+		foreach ($this->beforeRenderCallbacks as $beforeRender) {
+			$beforeRender($props, $this);
+		}
 	}
 
 	/**

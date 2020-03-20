@@ -12,6 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
 use Wavevision\PropsControl\PropsControl;
+use Wavevision\PropsControl\ValidProps;
 use Wavevision\PropsControlTests\Components\InvalidComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
@@ -35,6 +36,19 @@ class PropsControlTest extends TestCase
 			$presenterFactory->unformatPresenterClass(TestPresenter::class)
 		);
 		$presenter->addComponent($this->control, 'testControl');
+	}
+
+	public function testCallbacks(): void
+	{
+		$callback = function (ValidProps $props, $component): void {
+			$this->assertEquals('test', $props->get(TestComponentProps::STRING));
+			$this->assertInstanceOf(TestComponent::class, $component);
+		};
+		$this->control->addBeforeRender($callback);
+		$this->control->addBeforeMapPropsToTemplate($callback);
+		ob_start();
+		$this->control->render([TestComponentProps::STRING => 'test']);
+		ob_get_clean();
 	}
 
 	public function testRender(): void
