@@ -87,6 +87,12 @@ abstract class PropsControl extends BaseControl
 		return Strings::getClassName(static::class, true);
 	}
 
+	final public function getProps(): Props
+	{
+		$props = $this->getMappedProps();
+		return $this->createProps($props ? (array)$props : []);
+	}
+
 	/**
 	 * @return string[]
 	 */

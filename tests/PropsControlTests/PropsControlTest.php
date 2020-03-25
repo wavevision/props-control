@@ -51,6 +51,11 @@ class PropsControlTest extends TestCase
 		ob_get_clean();
 	}
 
+	public function testGetProps(): void
+	{
+		$this->assertEquals([], $this->control->getProps()->getData());
+	}
+
 	public function testRender(): void
 	{
 		ob_start();
