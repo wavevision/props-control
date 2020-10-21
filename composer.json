@@ -41,17 +41,12 @@
   },
   "require-dev": {
     "latte/latte": "^2.5",
-    "phing/phing": "^3.0.0-alpha3",
+    "nette/bootstrap": "^3.0",
     "php-coveralls/php-coveralls": "^2.1",
-    "php-parallel-lint/php-parallel-lint": "^1.0",
-    "phpstan/phpstan": "^0.11.16",
-    "phpunit/phpunit": "^8.3",
+    "phpunit/phpunit": "^9.3",
     "symfony/css-selector": "^4.3",
     "symfony/dom-crawler": "^4.3",
-    "wavevision/coding-standard": "^3.1"
-  },
-  "scripts": {
-    "phing": "phing"
+    "wavevision/coding-standard": "^5.2"
   },
   "extra": {
     "phpstan": {}

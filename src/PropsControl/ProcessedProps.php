@@ -23,19 +23,19 @@ final class ProcessedProps
 	}
 
 	/**
-	 * @param mixed $value
-	 */
-	public function __set(string $name, $value): void
-	{
-		$this->values[$name] = $value;
-	}
-
-	/**
 	 * @return mixed[]
 	 */
 	public function getValues(): array
 	{
 		return $this->values;
+	}
+
+	/**
+	 * @param mixed $value
+	 */
+	public function __set(string $name, $value): void
+	{
+		$this->values[$name] = $value;
 	}
 
 }

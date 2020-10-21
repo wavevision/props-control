@@ -4,6 +4,7 @@ namespace Wavevision\PropsControl;
 
 use stdClass;
 use Wavevision\PropsControl\Exceptions\NotAllowed;
+use function array_key_exists;
 
 final class ValidProps extends stdClass
 {
@@ -22,6 +23,36 @@ final class ValidProps extends stdClass
 	{
 		$this->props = $props;
 		$this->values = $values;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get(string $prop)
+	{
+		return $this->values[$prop];
+	}
+
+	/**
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public function getNullable(string $prop, $default = null)
+	{
+		if ($this->isSet($prop)) {
+			return $this->get($prop) ?? $default;
+		}
+		return $default;
+	}
+
+	public function isSet(string $prop): bool
+	{
+		return array_key_exists($prop, $this->values);
+	}
+
+	public function getProps(): Props
+	{
+		return $this->props;
 	}
 
 	/**
@@ -70,36 +101,6 @@ final class ValidProps extends stdClass
 	public function __unset(string $name): void
 	{
 		throw new NotAllowed("Cannot unset prop '$name', props are read-only.");
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function get(string $prop)
-	{
-		return $this->values[$prop];
-	}
-
-	/**
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public function getNullable(string $prop, $default = null)
-	{
-		if ($this->isSet($prop)) {
-			return $this->get($prop) ?? $default;
-		}
-		return $default;
-	}
-
-	public function isSet(string $prop): bool
-	{
-		return array_key_exists($prop, $this->values);
-	}
-
-	public function getProps(): Props
-	{
-		return $this->props;
 	}
 
 }

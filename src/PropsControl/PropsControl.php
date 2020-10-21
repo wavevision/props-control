@@ -10,6 +10,13 @@ use Wavevision\PropsControl\Helpers\ClassName;
 use Wavevision\PropsControl\Helpers\Render;
 use Wavevision\PropsControl\Helpers\Style;
 use Wavevision\Utils\Strings;
+use function class_exists;
+use function gettype;
+use function is_array;
+use function is_callable;
+use function is_object;
+use function is_string;
+use function sprintf;
 
 /**
  * @property-read PropsControlTemplate $template
@@ -87,12 +94,6 @@ abstract class PropsControl extends BaseControl
 		return Strings::getClassName(static::class, true);
 	}
 
-	final public function getProps(): Props
-	{
-		$props = $this->getMappedProps();
-		return $this->createProps($props ? (array)$props : []);
-	}
-
 	/**
 	 * @return string[]
 	 */
@@ -112,6 +113,7 @@ abstract class PropsControl extends BaseControl
 
 	/**
 	 * @param mixed[]|object $props
+	 * @return Html<string>
 	 */
 	public function renderToHtml($props): Html
 	{
@@ -126,6 +128,14 @@ abstract class PropsControl extends BaseControl
 		$this->prepareRender($props);
 		return $this->template->renderToString();
 	}
+
+	final public function getProps(): Props
+	{
+		$props = $this->getMappedProps();
+		return $this->createProps($props ? (array)$props : []);
+	}
+
+	abstract protected function getPropsClass(): string;
 
 	protected function beforeMapPropsToTemplate(ValidProps $props): void
 	{
@@ -188,8 +198,6 @@ abstract class PropsControl extends BaseControl
 		$this->beforeRender($props);
 	}
 
-	abstract protected function getPropsClass(): string;
-
 	/**
 	 * @param mixed $props
 	 */
@@ -222,7 +230,7 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
-	 * @param mixed[]|object $props
+	 * @param mixed $props
 	 */
 	private function createInvalidProps(string $message, $props): InvalidProps
 	{
