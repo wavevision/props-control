@@ -8,6 +8,7 @@ use Nette\DI\Container;
 use Nette\Schema\ValidationException;
 use Nette\Utils\Html;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Symfony\Component\DomCrawler\Crawler;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
@@ -17,6 +18,9 @@ use Wavevision\PropsControlTests\Components\InvalidComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponent;
 use Wavevision\PropsControlTests\Components\TestComponent\TestComponentProps;
 use Wavevision\PropsControlTests\Presenters\TestPresenter;
+use function ob_get_clean;
+use function ob_start;
+use function strpos;
 
 class PropsControlTest extends TestCase
 {
@@ -33,7 +37,7 @@ class PropsControlTest extends TestCase
 		$presenterFactory = $this->container->getByType(IPresenterFactory::class);
 		/** @var TestPresenter $presenter */
 		$presenter = $presenterFactory->createPresenter(
-			$presenterFactory->unformatPresenterClass(TestPresenter::class)
+			(string)$presenterFactory->unformatPresenterClass(TestPresenter::class)
 		);
 		$presenter->addComponent($this->control, 'testControl');
 	}
@@ -59,7 +63,7 @@ class PropsControlTest extends TestCase
 	public function testRender(): void
 	{
 		ob_start();
-		$entity = new \stdClass();
+		$entity = new stdClass();
 		$entity->enabled = true;
 		$this->control->render(
 			[
@@ -68,7 +72,7 @@ class PropsControlTest extends TestCase
 				TestComponentProps::COLLECTION => [['one' => 'One', 'two' => 2]],
 			]
 		);
-		$crawler = new Crawler(ob_get_clean());
+		$crawler = new Crawler((string)ob_get_clean());
 		$root = $crawler->filter('div.tc');
 		$this->assertEquals(
 			'tc tc--boolean tc--one tc--custom tc--some-other-modifier',
@@ -79,8 +83,8 @@ class PropsControlTest extends TestCase
 		$this->assertCount(3, $root->children());
 		$parts = $crawler->filter('div.tc-part__element');
 		$this->assertCount(5, $parts);
-		$this->assertTrue(strpos($parts->first()->attr('class'), 'first') !== false);
-		$this->assertTrue(strpos($parts->last()->attr('class'), 'last') !== false);
+		$this->assertTrue(strpos((string)$parts->first()->attr('class'), 'first') !== false);
+		$this->assertTrue(strpos((string)$parts->last()->attr('class'), 'last') !== false);
 		$other = $crawler->filter('div.other-block');
 		$this->assertEquals(1, $other->count());
 		$this->assertCount(1, $other->children());
@@ -97,7 +101,7 @@ class PropsControlTest extends TestCase
 
 	public function testRenderToString(): void
 	{
-		$props = new \stdClass();
+		$props = new stdClass();
 		$props->{TestComponentProps::STRING} = 'some string';
 		$props->{TestComponentProps::COLLECTION} = [['one' => 'One', 'two' => 2]];
 		$this->assertIsString($this->control->renderToString($props));
@@ -111,7 +115,7 @@ class PropsControlTest extends TestCase
 	public function testRenderInvalidProps(): void
 	{
 		$this->expectException(InvalidProps::class);
-		$this->control->render(1);
+		$this->control->render(1); //@phpstan-ignore-line
 	}
 
 	public function testCreatePropsThrowsException(): void

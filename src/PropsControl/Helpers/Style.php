@@ -5,6 +5,10 @@ namespace Wavevision\PropsControl\Helpers;
 use Nette\SmartObject;
 use Wavevision\PropsControl\Exceptions\InvalidArgument;
 use Wavevision\Utils\Strings;
+use function gettype;
+use function implode;
+use function is_scalar;
+use function sprintf;
 
 class Style
 {
@@ -16,15 +20,6 @@ class Style
 	 */
 	private array $style = [];
 
-	public function __toString(): string
-	{
-		$style = [];
-		foreach ($this->style as $key => $value) {
-			$style[] = Strings::camelCaseToDashCase($key) . ':' . $value;
-		}
-		return implode(';', $style);
-	}
-
 	/**
 	 * @param mixed $value
 	 */
@@ -35,6 +30,15 @@ class Style
 		}
 		$this->style[$key] = $value;
 		return $this;
+	}
+
+	public function __toString(): string
+	{
+		$style = [];
+		foreach ($this->style as $key => $value) {
+			$style[] = Strings::camelCaseToDashCase($key) . ':' . $value;
+		}
+		return implode(';', $style);
 	}
 
 }

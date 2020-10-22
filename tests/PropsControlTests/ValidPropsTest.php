@@ -38,7 +38,7 @@ class ValidPropsTest extends TestCase
 		$validProps = new ValidProps(new TestComponentProps(), ['prop' => 'value']);
 		$this->assertEquals('value', $validProps->prop);
 		$this->expectException(NotAllowed::class);
-		$validProps->undefinedProp;
+		$validProps->undefinedProp; //@phpstan-ignore-line
 	}
 
 	public function testSetThrowsNotAllowed(): void

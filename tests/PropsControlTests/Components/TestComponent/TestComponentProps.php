@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControlTests\Components\TestComponent;
 
 use Nette\Schema\Expect;
+use stdClass;
 use Wavevision\PropsControl\Props;
 
 class TestComponentProps extends Props
@@ -38,7 +39,7 @@ class TestComponentProps extends Props
 			self::COLLECTION => Expect::arrayOf(
 				Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])
 			),
-			self::ENTITY => Expect::type(\stdClass::class)->nullable(),
+			self::ENTITY => Expect::type(stdClass::class)->nullable(),
 			self::LINE_HEIGHT => Expect::float(1.4),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),

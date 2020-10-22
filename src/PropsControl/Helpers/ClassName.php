@@ -4,6 +4,11 @@ namespace Wavevision\PropsControl\Helpers;
 
 use Nette\SmartObject;
 use Wavevision\Utils\Strings;
+use function array_filter;
+use function array_merge;
+use function array_unique;
+use function implode;
+use function is_callable;
 
 class ClassName
 {
@@ -53,7 +58,7 @@ class ClassName
 		if ($subBlock) {
 			$baseClass = $this->baseClass . $this->subBlockDelimiter . $baseClass;
 		}
-		return new static($baseClass, $excludeModifiers ? null : $this->modifiersCallback);
+		return new self($baseClass, $excludeModifiers ? null : $this->modifiersCallback);
 	}
 
 	public function element(string $className, ?string ...$modifiers): string

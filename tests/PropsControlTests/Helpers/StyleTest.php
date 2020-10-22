@@ -3,6 +3,7 @@
 namespace Wavevision\PropsControlTests\Helpers;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Wavevision\PropsControl\Exceptions\InvalidArgument;
 use Wavevision\PropsControl\Helpers\Style;
 
@@ -19,7 +20,7 @@ class StyleTest extends TestCase
 	{
 		$style = new Style();
 		$this->expectException(InvalidArgument::class);
-		$style->add('key', new \stdClass());
+		$style->add('key', new stdClass());
 	}
 
 }

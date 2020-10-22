@@ -10,6 +10,9 @@ class Render
 
 	use StaticClass;
 
+	/**
+	 * @return Html<string>
+	 */
 	public static function toHtml(string $content): Html
 	{
 		return Html::el()->setHtml($content);
