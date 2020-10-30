@@ -79,6 +79,12 @@ class ClassName
 		return $this->baseClass;
 	}
 
+	public function setBlockDelimiter(string $blockDelimiter): self
+	{
+		$this->blockDelimiter = $blockDelimiter;
+		return $this;
+	}
+
 	public function setElementDelimiter(string $elementDelimiter): self
 	{
 		$this->elementDelimiter = $elementDelimiter;
@@ -88,12 +94,6 @@ class ClassName
 	public function setModifierDelimiter(string $modifierDelimiter): self
 	{
 		$this->modifierDelimiter = $modifierDelimiter;
-		return $this;
-	}
-
-	public function setBlockDelimiter(string $blockDelimiter): self
-	{
-		$this->blockDelimiter = $blockDelimiter;
 		return $this;
 	}
 
