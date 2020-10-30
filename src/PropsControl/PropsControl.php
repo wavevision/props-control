@@ -52,7 +52,7 @@ abstract class PropsControl extends BaseControl
 			function (Template $template): void {
 				$template->setParameters(
 					[
-						self::DEFINITION => $this->createProps([]),
+						self::DEFINITION => $this->getProps(),
 						self::CLASS_NAME => $this->createClassName(),
 						self::STYLE => new Style(),
 					]
