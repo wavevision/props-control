@@ -28,6 +28,8 @@ abstract class PropsControl extends BaseControl
 
 	private const CLASS_NAME = ClassName::PROP;
 
+	private const DEFINITION = 'definition';
+
 	private const MODIFIERS = 'modifiers';
 
 	private const PROPS = 'props';
@@ -50,6 +52,7 @@ abstract class PropsControl extends BaseControl
 			function (Template $template): void {
 				$template->setParameters(
 					[
+						self::DEFINITION => $this->createProps([]),
 						self::CLASS_NAME => $this->createClassName(),
 						self::STYLE => new Style(),
 					]
@@ -135,6 +138,9 @@ abstract class PropsControl extends BaseControl
 		return $this->createProps($props ? (array)$props : []);
 	}
 
+	/**
+	 * @return class-string<Props>
+	 */
 	abstract protected function getPropsClass(): string;
 
 	protected function beforeMapPropsToTemplate(ValidProps $props): void

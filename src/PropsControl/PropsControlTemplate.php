@@ -11,6 +11,8 @@ class PropsControlTemplate extends Template
 
 	public ClassName $className;
 
+	public Props $definition;
+
 	/**
 	 * @var string[]
 	 */

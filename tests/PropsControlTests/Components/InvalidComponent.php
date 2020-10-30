@@ -9,7 +9,7 @@ class InvalidComponent extends PropsControl
 
 	protected function getPropsClass(): string
 	{
-		return '';
+		return ''; // @phpstan-ignore-line
 	}
 
 }

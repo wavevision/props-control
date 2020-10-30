@@ -24,9 +24,7 @@ class PropTypes
 		/** @var array<string, Schema> $booleans */
 		$booleans = Arrays::mapKeysFromValues(
 			$props,
-			function (string $prop): array {
-				return [$prop, Expect::bool(false)];
-			}
+			fn(string $prop): array => [$prop, Expect::bool(false)]
 		);
 		return $booleans;
 	}
