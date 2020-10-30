@@ -17,13 +17,15 @@ class ClassName
 
 	public const PROP = 'className';
 
+	private const BLOCK_DELIMITER = '-';
+
 	private const ELEMENT_DELIMITER = '__';
 
 	private const MODIFIER_DELIMITER = '--';
 
-	private const SUB_BLOCK_DELIMITER = '-';
-
 	private string $baseClass;
+
+	private string $blockDelimiter;
 
 	private string $elementDelimiter;
 
@@ -34,15 +36,13 @@ class ClassName
 	 */
 	private $modifiersCallback;
 
-	private string $subBlockDelimiter;
-
 	public function __construct(string $baseClass, ?callable $modifiersCallback = null)
 	{
 		$this->baseClass = $baseClass;
+		$this->blockDelimiter = self::BLOCK_DELIMITER;
 		$this->elementDelimiter = self::ELEMENT_DELIMITER;
 		$this->modifierDelimiter = self::MODIFIER_DELIMITER;
 		$this->modifiersCallback = $modifiersCallback;
-		$this->subBlockDelimiter = self::SUB_BLOCK_DELIMITER;
 	}
 
 	public function block(?string ...$modifiers): string
@@ -53,10 +53,10 @@ class ClassName
 		return $this->composeClassNames($this->baseClass, $modifiers);
 	}
 
-	public function create(string $baseClass, bool $subBlock = true, bool $excludeModifiers = false): self
+	public function create(string $baseClass, bool $block = true, bool $excludeModifiers = false): self
 	{
-		if ($subBlock) {
-			$baseClass = $this->baseClass . $this->subBlockDelimiter . $baseClass;
+		if ($block) {
+			$baseClass = $this->baseClass . $this->blockDelimiter . $baseClass;
 		}
 		return new self($baseClass, $excludeModifiers ? null : $this->modifiersCallback);
 	}
@@ -69,7 +69,7 @@ class ClassName
 	public function extra(string $className, string $prefix = ''): string
 	{
 		if ($prefix !== '') {
-			return $prefix . $this->subBlockDelimiter . $className;
+			return $prefix . $this->blockDelimiter . $className;
 		}
 		return $className;
 	}
@@ -91,9 +91,9 @@ class ClassName
 		return $this;
 	}
 
-	public function setSubBlockDelimiter(string $subBlockDelimiter): self
+	public function setBlockDelimiter(string $blockDelimiter): self
 	{
-		$this->subBlockDelimiter = $subBlockDelimiter;
+		$this->blockDelimiter = $blockDelimiter;
 		return $this;
 	}
 
