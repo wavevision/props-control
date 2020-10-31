@@ -1,0 +1,7 @@
+- Getting started
+    - [Installation](getting-started/installation.md)
+    - [First component](getting-started/first-component.md)
+- Guide
+    - [Understanding Props](guide/understanding-props.md)
+    - [Working with Props](guide/working-with-props.md)
+    - [CSS class helper](guide/css-class-helper.md)
