@@ -13,7 +13,7 @@
 - simple to use
 - automatic template file assignment
 - immutable props defined and validated using [`nette/schema`](https://github.com/nette/schema)
-- CSS classname helper to seamlessly create whole classes based on current props (defaults to simplified BEM syntax)
+- CSS classname helper to seamlessly create whole classes based on current props
 - style attribute helper to easily assign inline style to your component
 - `beforeRender` method you know from presenters with ability to add callbacks from higher order components
 - rendering to `string` and `Nette\Utils\Html`
