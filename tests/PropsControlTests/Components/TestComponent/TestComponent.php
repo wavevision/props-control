@@ -65,6 +65,9 @@ class TestComponent extends PropsControl
 		// do stuff before component is rendered
 	}
 
+	/**
+	 * @return class-string<TestComponentProps>
+	 */
 	protected function getPropsClass(): string
 	{
 		return TestComponentProps::class;

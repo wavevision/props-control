@@ -30,7 +30,7 @@ class ClassNameTest extends TestCase
 		$this->assertInstanceOf(ClassName::class, $sub2);
 		$this->assertInstanceOf(ClassName::class, $sub1->setElementDelimiter(''));
 		$this->assertInstanceOf(ClassName::class, $sub1->setModifierDelimiter(''));
-		$this->assertInstanceOf(ClassName::class, $sub1->setSubBlockDelimiter(''));
+		$this->assertInstanceOf(ClassName::class, $sub1->setBlockDelimiter(''));
 	}
 
 	public function testElement(): void
