@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/wavevision/props-control/badge.svg?branch=master)](https://coveralls.io/github/wavevision/props-control?branch=master)
 [![PHPStan](https://img.shields.io/badge/style-level%20max-brightgreen.svg?label=phpstan)](https://github.com/phpstan/phpstan)
 
-## What is it
+## What it is
 
 `PropsControl` is an abstract `Nette\Application\UI\Control` that can help you to create simple, yet powerful UI components with great maintainability.
 
