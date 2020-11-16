@@ -18,5 +18,4 @@ composer require wavevision/props-control
 
 ## Usage
 
-See [tests](./tests/PropsControlTests/Components/TestComponent) for example implementation of the abstract component
-and its props.
+See documentation at [wavevision.github.io/props-control](https://wavevision.github.io/props-control).
