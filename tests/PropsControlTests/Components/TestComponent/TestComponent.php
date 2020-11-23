@@ -49,7 +49,10 @@ class TestComponent extends PropsControl
 	{
 		// Optionally define which prop values will be used to assemble style attribute
 		parent::getStyleProps();
-		return [TestComponentProps::LINE_HEIGHT];
+		return [
+			TestComponentProps::FONT_SIZE => fn(int $fontSize): string => $fontSize . 'px',
+			TestComponentProps::LINE_HEIGHT,
+		];
 	}
 
 	protected function beforeMapPropsToTemplate(ValidProps $props): void

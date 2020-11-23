@@ -98,7 +98,7 @@ abstract class PropsControl extends BaseControl
 	}
 
 	/**
-	 * @return string[]
+	 * @return mixed[]
 	 */
 	public function getStyleProps(): array
 	{
@@ -252,9 +252,15 @@ abstract class PropsControl extends BaseControl
 
 	private function prepareStyle(ValidProps $props): void
 	{
-		foreach ($this->getStyleProps() as $prop) {
-			if ($value = $props->get($prop)) {
-				$this->template->style->add($prop, $value);
+		foreach ($this->getStyleProps() as $key => $value) {
+			if (is_callable($value)) {
+				if ($formatted = $value($props->get($key))) {
+					$this->template->style->add($key, $formatted);
+				}
+			} else {
+				if ($mapped = $props->get($value)) {
+					$this->template->style->add($value, $mapped);
+				}
 			}
 		}
 	}

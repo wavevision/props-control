@@ -15,6 +15,8 @@ class TestComponentProps extends Props
 
 	public const ENTITY = 'entity';
 
+	public const FONT_SIZE = 'fontSize';
+
 	public const LINE_HEIGHT = 'lineHeight';
 
 	public const NULLABLE_NUMBER = 'nullableNumber';
@@ -40,6 +42,7 @@ class TestComponentProps extends Props
 				Expect::structure(['one' => Expect::string(), 'two' => Expect::int(),])
 			),
 			self::ENTITY => Expect::type(stdClass::class)->nullable(),
+			self::FONT_SIZE => Expect::int(14),
 			self::LINE_HEIGHT => Expect::float(1.4),
 			self::NULLABLE_NUMBER => Expect::int()->nullable(),
 			self::STRING => Expect::string()->required(),
