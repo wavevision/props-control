@@ -2,6 +2,8 @@
 
 namespace Wavevision\PropsControl;
 
+use Nette\Utils\ArrayHash;
+use Nette\Utils\Json;
 use stdClass;
 use Wavevision\PropsControl\Exceptions\NotAllowed;
 use function array_key_exists;
@@ -53,6 +55,27 @@ final class ValidProps extends stdClass
 	public function getProps(): Props
 	{
 		return $this->props;
+	}
+
+	/**
+	 * @return array<mixed>
+	 */
+	public function toArray(): array
+	{
+		return $this->values;
+	}
+
+	/**
+	 * @return ArrayHash<mixed>
+	 */
+	public function toArrayHash(): ArrayHash
+	{
+		return ArrayHash::from($this->toArray());
+	}
+
+	public function toJson(): string
+	{
+		return Json::encode($this->toArray());
 	}
 
 	/**

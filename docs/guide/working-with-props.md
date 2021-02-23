@@ -1,14 +1,14 @@
 # Working with Props
 
-As demonstrated in [First Component](getting-started/first-component.md) example, each `PropsControl` component needs its
-Props for data consumption and output rendering.
+As demonstrated in [First Component](getting-started/first-component.md) example, each `PropsControl` component needs
+its Props for data consumption and output rendering.
 
 ## Definition
 
-The definition will give us the shape of our props, so we can structure and validate them. 
-Also, the constants used for the definition can be later used to create and get the data while avoiding typos in prop names.
-Constants are also extremely useful when re-defining your props. If you refactor any constant in your IDE, the change will
-get propagated through your whole application.
+The definition will give us the shape of our props, so we can structure and validate them. Also, the constants used for
+the definition can be later used to create and get the data while avoiding typos in prop names. Constants are also
+extremely useful when re-defining your props. If you refactor any constant in your IDE, the change will get propagated
+through your whole application.
 
 After we created our definition and linked it to our component we can use the definition object to wrap our data.
 
@@ -64,3 +64,11 @@ Props are read-only, `Wavevision\PropsControl\Exceptions\NotAllowed` exception w
 - you're trying to access an undefined prop
 - you're trying to write to a prop
 - you're calling any method not defined in `Wavevision\PropsControl\ValidProps` class
+
+## Formatting props
+
+You can use a few predefined methods to format values of the `ValidProps` object.
+
+- `toArray(): array<mixed>`
+- `toArrayHash(): Nette\Utils\ArrayHash<mixed>`
+- `toJson(): string`

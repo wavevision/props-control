@@ -2,6 +2,7 @@
 
 namespace Wavevision\PropsControlTests;
 
+use Nette\Utils\ArrayHash;
 use PHPUnit\Framework\TestCase;
 use Wavevision\PropsControl\Exceptions\NotAllowed;
 use Wavevision\PropsControl\ValidProps;
@@ -31,6 +32,26 @@ class ValidPropsTest extends TestCase
 		$props = new TestComponentProps();
 		$validProps = new ValidProps($props, []);
 		$this->assertSame($props, $validProps->getProps());
+	}
+
+	public function testToArray(): void
+	{
+		$props = [];
+		$validProps = new ValidProps(new TestComponentProps(), $props);
+		$this->assertSame($validProps->toArray(), $props);
+	}
+
+	public function testToArrayHash(): void
+	{
+		$props = ['prop' => 'value'];
+		$validProps = new ValidProps(new TestComponentProps(), $props);
+		$this->assertEquals(ArrayHash::from($props), $validProps->toArrayHash());
+	}
+
+	public function testToJson(): void
+	{
+		$validProps = new ValidProps(new TestComponentProps(), []);
+		$this->assertIsString($validProps->toJson());
 	}
 
 	public function testGetThrowsNotAllowed(): void

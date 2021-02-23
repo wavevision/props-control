@@ -35,6 +35,7 @@
   },
   "require": {
     "php": ">=7.4",
+    "ext-json": "*",
     "nette/application": "^3.0",
     "nette/schema": "^1.0",
     "wavevision/utils": "^2.5"
