@@ -2,7 +2,8 @@
 
 namespace Wavevision\PropsControl;
 
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Application\UI\Template;
+use Nette\Utils\Arrays;
 use Nette\Utils\Html;
 use Wavevision\PropsControl\Exceptions\InvalidProps;
 use Wavevision\PropsControl\Exceptions\InvalidState;
@@ -50,12 +51,13 @@ abstract class PropsControl extends BaseControl
 	{
 		$this->onCreateTemplate(
 			function (Template $template): void {
-				$template->setParameters(
+				Arrays::toObject(
 					[
 						self::DEFINITION => $this->getProps(),
 						self::CLASS_NAME => $this->createClassName(),
 						self::STYLE => new Style(),
-					]
+					],
+					$template
 				);
 			}
 		);
