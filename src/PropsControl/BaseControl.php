@@ -3,8 +3,7 @@
 namespace Wavevision\PropsControl;
 
 use Nette\Application\UI\Control;
-use Nette\Application\UI\ITemplate;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Application\UI\Template;
 use function dirname;
 
 /**
@@ -20,9 +19,8 @@ abstract class BaseControl extends Control
 	 */
 	private array $onCreateTemplate = [];
 
-	protected function createTemplate(): ITemplate
+	protected function createTemplate(): Template
 	{
-		/** @var Template $template */
 		$template = parent::createTemplate();
 		foreach ($this->onCreateTemplate as $callback) {
 			$callback($template);
@@ -31,6 +29,9 @@ abstract class BaseControl extends Control
 		return $template;
 	}
 
+	/**
+	 * @param callable(Template): void $callback
+	 */
 	final protected function onCreateTemplate(callable $callback): self
 	{
 		$this->onCreateTemplate[] = $callback;

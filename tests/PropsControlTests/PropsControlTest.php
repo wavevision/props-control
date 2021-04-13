@@ -36,9 +36,7 @@ class PropsControlTest extends TestCase
 		/** @var PresenterFactory $presenterFactory */
 		$presenterFactory = $this->container->getByType(IPresenterFactory::class);
 		/** @var TestPresenter $presenter */
-		$presenter = $presenterFactory->createPresenter(
-			(string)$presenterFactory->unformatPresenterClass(TestPresenter::class)
-		);
+		$presenter = $presenterFactory->createPresenter('test');
 		$presenter->addComponent($this->control, 'testControl');
 	}
 
