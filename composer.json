@@ -45,9 +45,9 @@
     "nette/bootstrap": "^3.0",
     "php-coveralls/php-coveralls": "^2.1",
     "phpunit/phpunit": "^9.3",
-    "symfony/css-selector": "^4.3",
-    "symfony/dom-crawler": "^4.3",
-    "wavevision/coding-standard": "^5.2"
+    "symfony/css-selector": "^5.2",
+    "symfony/dom-crawler": "^5.2",
+    "wavevision/coding-standard": "^6.0"
   },
   "extra": {
     "phpstan": {}

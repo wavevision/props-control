@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5d3b74a433dee6f70658c5360dd4a7d",
+    "content-hash": "ce7515460b5dd02bfe3e66813a05b571",
     "packages": [
         {
             "name": "nette/application",
@@ -515,27 +515,32 @@
         },
         {
             "name": "softcreatr/jsonpath",
-            "version": "0.6.4",
+            "version": "0.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SoftCreatR/JSONPath.git",
-                "reference": "79da94b863743ec1fbf22127580d88e34f0146c3"
+                "reference": "e3ae75112a5247e3b27a7e0e72155eae261d8c72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SoftCreatR/JSONPath/zipball/79da94b863743ec1fbf22127580d88e34f0146c3",
-                "reference": "79da94b863743ec1fbf22127580d88e34f0146c3",
+                "url": "https://api.github.com/repos/SoftCreatR/JSONPath/zipball/e3ae75112a5247e3b27a7e0e72155eae261d8c72",
+                "reference": "e3ae75112a5247e3b27a7e0e72155eae261d8c72",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=7.1 || <8.1"
+                "php": ">=7.1"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<7.0 || >= 10.0"
             },
             "replace": {
                 "flow/jsonpath": "*"
             },
             "require-dev": {
-                "phpunit/phpunit": "<7.0 || >= 10.0"
+                "phpunit/phpunit": ">=7.0",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "autoload": {
@@ -564,6 +569,7 @@
             "description": "JSONPath implementation for parsing, searching and flattening arrays",
             "support": {
                 "email": "hello@1-2.dev",
+                "forum": "https://github.com/SoftCreatR/JSONPath/discussions",
                 "issues": "https://github.com/SoftCreatR/JSONPath/issues",
                 "source": "https://github.com/SoftCreatR/JSONPath"
             },
@@ -573,20 +579,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-18T06:35:49+00:00"
+            "time": "2021-03-08T14:18:21+00:00"
         },
         {
             "name": "wavevision/utils",
-            "version": "2.13.1",
+            "version": "2.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wavevision/utils.git",
-                "reference": "c9551b6f062fc52466b5b2669210b134db12e6c3"
+                "reference": "6ba5963dfc5b474d3d169dde1d58b7b1f2db840c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wavevision/utils/zipball/c9551b6f062fc52466b5b2669210b134db12e6c3",
-                "reference": "c9551b6f062fc52466b5b2669210b134db12e6c3",
+                "url": "https://api.github.com/repos/wavevision/utils/zipball/6ba5963dfc5b474d3d169dde1d58b7b1f2db840c",
+                "reference": "6ba5963dfc5b474d3d169dde1d58b7b1f2db840c",
                 "shasum": ""
             },
             "require": {
@@ -597,13 +603,13 @@
                 "nette/finder": "^2.5",
                 "nette/utils": "^3.1",
                 "php": ">=7.4",
-                "softcreatr/jsonpath": "^0.6.4"
+                "softcreatr/jsonpath": "^0.7.3"
             },
             "require-dev": {
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^9.4",
-                "wavevision/coding-standard": "^5.2"
+                "wavevision/coding-standard": "^6.0"
             },
             "type": "library",
             "extra": {
@@ -635,9 +641,9 @@
             "description": "Useful PHP utilities and helpers.",
             "support": {
                 "issues": "https://github.com/wavevision/utils/issues",
-                "source": "https://github.com/wavevision/utils/tree/2.13.1"
+                "source": "https://github.com/wavevision/utils/tree/2.13.2"
             },
-            "time": "2020-10-21T13:25:37+00:00"
+            "time": "2021-04-15T17:47:52+00:00"
         }
     ],
     "packages-dev": [
@@ -4079,20 +4085,20 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.4.20",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "f907d3e53ecb2a5fad8609eb2f30525287a734c8"
+                "reference": "f65f217b3314504a1ec99c2d6ef69016bb13490f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/f907d3e53ecb2a5fad8609eb2f30525287a734c8",
-                "reference": "f907d3e53ecb2a5fad8609eb2f30525287a734c8",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/f65f217b3314504a1ec99c2d6ef69016bb13490f",
+                "reference": "f65f217b3314504a1ec99c2d6ef69016bb13490f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.3"
+                "php": ">=7.2.5"
             },
             "type": "library",
             "autoload": {
@@ -4124,7 +4130,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v4.4.20"
+                "source": "https://github.com/symfony/css-selector/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -4140,7 +4146,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T09:09:26+00:00"
+            "time": "2021-01-27T10:01:46+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -4211,29 +4217,30 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v4.4.20",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "be133557f1b0e6672367325b508e65da5513a311"
+                "reference": "400e265163f65aceee7e904ef532e15228de674b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/be133557f1b0e6672367325b508e65da5513a311",
-                "reference": "be133557f1b0e6672367325b508e65da5513a311",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/400e265163f65aceee7e904ef532e15228de674b",
+                "reference": "400e265163f65aceee7e904ef532e15228de674b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.3",
+                "php": ">=7.2.5",
                 "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.0"
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "^1.15"
             },
             "conflict": {
                 "masterminds/html5": "<2.6"
             },
             "require-dev": {
                 "masterminds/html5": "^2.6",
-                "symfony/css-selector": "^3.4|^4.0|^5.0"
+                "symfony/css-selector": "^4.4|^5.0"
             },
             "suggest": {
                 "symfony/css-selector": ""
@@ -4264,7 +4271,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v4.4.20"
+                "source": "https://github.com/symfony/dom-crawler/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -4280,7 +4287,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-14T12:29:41+00:00"
+            "time": "2021-02-15T18:55:04+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -5181,16 +5188,16 @@
         },
         {
             "name": "wavevision/coding-standard",
-            "version": "5.2.3",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wavevision/coding-standard.git",
-                "reference": "ad345f3263c52159fcd7dc98943a0e7e36103a09"
+                "reference": "042afb2b9ef238c90932706830d0d92474ce5f4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wavevision/coding-standard/zipball/ad345f3263c52159fcd7dc98943a0e7e36103a09",
-                "reference": "ad345f3263c52159fcd7dc98943a0e7e36103a09",
+                "url": "https://api.github.com/repos/wavevision/coding-standard/zipball/042afb2b9ef238c90932706830d0d92474ce5f4e",
+                "reference": "042afb2b9ef238c90932706830d0d92474ce5f4e",
                 "shasum": ""
             },
             "require": {
@@ -5222,9 +5229,9 @@
             "homepage": "https://github.com/wavevision/coding-standard",
             "support": {
                 "issues": "https://github.com/wavevision/coding-standard/issues",
-                "source": "https://github.com/wavevision/coding-standard/tree/5.2.3"
+                "source": "https://github.com/wavevision/coding-standard/tree/6.0.2"
             },
-            "time": "2020-11-05T13:39:10+00:00"
+            "time": "2021-04-15T17:32:30+00:00"
         },
         {
             "name": "webmozart/assert",
